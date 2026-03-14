@@ -1,4 +1,4 @@
-const CACHE_NAME = 'rixal-pos-cache-v1';
+const CACHE_NAME = 'rixal-pos-cache-v2';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -18,12 +18,15 @@ const urlsToCache = [
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
-  );
-});
-
-self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(response => response || fetch(e.request))
+    (async () => {
+      const cache = await caches.open(CACHE_NAME);
+      for (const url of urlsToCache) {
+        try {
+          await cache.add(url);
+        } catch (err) {
+          console.warn('Failed to cache', url, err);
+        }
+      }
+    })()
   );
 });
