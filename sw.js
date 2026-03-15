@@ -5,7 +5,7 @@ const urlsToCache = [
   '/manifest.json',
   '/assets/js/config.js',
   '/assets/js/auth.js',
-  '/assets/images/logo.png',
+  '/assets/images/app-icon.png',
   '/assets/vendor/bootstrap.min.css',
   '/assets/vendor/bootstrap.bundle.min.js',
   '/assets/vendor/bootstrap-icons.css',
