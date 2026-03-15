@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ge-iX FR App - ANHS 2011 Scan QR</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#E41200">
+<link rel="icon" type="image/png" href="assets/images/app-icon.png">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="assets/vendor/bootstrap.min.css">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons.css">
+<!-- Toastr CSS -->
+<link rel="stylesheet" href="assets/vendor/toastr.min.css">
+<link rel="stylesheet" href="assets/css/footer.css">
+
+<!-- jQuery -->
+<script src="assets/vendor/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/toastr.min.js"></script>
+<script src="assets/vendor/html5-qrcode.min.js"></script> <!-- QR scanner library -->
+
+<script src="assets/js/config.js"></script>
+
+<style>
+body {
+  background-color: #f8f9fa;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.scan-card {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 1rem;
+  padding: 2rem;
+  border-top: 5px solid #E41200;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
+}
+
+.scan-logo {
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+.scan-title {
+  color: #E41200;
+  font-weight: 700;
+  margin-bottom:1.5rem;
+}
+
+.user-info p {
+  font-size: 1rem;
+  margin: 0.25rem 0;
+}
+
+.user-info strong {
+  color: #E41200;
+}
+
+#reader {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+</style>
+</head>
+<body>
+
+<div class="scan-card">
+  <img src="assets/images/anhs-2011-logo.png" class="scan-logo" alt="ANHS 2011">
+  <h3 class="scan-title">Scan QR Code</h3>
+
+  <!-- QR code scanner -->
+  <div id="reader"></div>
+
+  <!-- Display scanned info -->
+  <div class="user-info mt-3" style="display:none;">
+    <p><strong>Name:</strong> <span id="user-name"></span></p>
+    <p><strong>Batch Year:</strong> <span id="user-batch"></span></p>
+    <p><strong>Gender:</strong> <span id="user-gender"></span></p>
+    <p><strong>Birthdate:</strong> <span id="user-birthdate"></span></p>
+    <p><strong>Contact:</strong> <span id="user-contact"></span></p>
+    <p><strong>Address:</strong> <span id="user-address"></span></p>
+    <p><strong>T-Shirt Size:</strong> <span id="user-tshirt"></span></p>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="assets/js/loadFooter.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js')
+    .then(()=>console.log("SW registered"))
+    .catch(err=>console.log(err))
+}
+
+// Initialize QR code scanner
+function onScanSuccess(decodedText, decodedResult) {
+    try {
+        // Assume QR code contains JSON string of registration data
+        const data = JSON.parse(decodedText);
+
+        $('#user-name').text(data.firstName + ' ' + data.lastName);
+        $('#user-batch').text(data.batchYear);
+        $('#user-gender').text(data.gender);
+        $('#user-birthdate').text(data.birthdate);
+        $('#user-contact').text(data.contact);
+        $('#user-address').text(data.address);
+        $('#user-tshirt').text(data.tshirt);
+
+        $('.user-info').show();
+        toastr.success("QR Code scanned successfully!");
+    } catch(err) {
+        toastr.error("Invalid QR Code!");
+    }
+}
+
+// Start scanner
+let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader", { fps: 10, qrbox: 250 }
+);
+html5QrcodeScanner.render(onScanSuccess);
+</script>
+
+</body>
+</html>
