@@ -100,34 +100,6 @@ body {
 <script src="assets/js/loadFooter.js"></script>
 
 <script>
-// Initialize QR Code
-const qrData = "Name:Joverixal Entuna;Batch:2011";
-const qrCode = new Html5Qrcode("qrcode");
-
-// Render QR code
-qrCode.render(qrData, {
-  width: 250,
-  height: 250,
-  qrbox: 250
-}).catch(err => console.error(err));
-
-// Download QR code as PNG
-document.getElementById('btn-download').addEventListener('click', async () => {
-  try {
-    const qrElement = document.getElementById('qrcode').querySelector('canvas');
-    if (!qrElement) throw "QR canvas not found!";
-    
-    const dataUrl = qrElement.toDataURL("image/png");
-    const a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = "ANHS2011_QR.png";
-    a.click();
-  } catch(err) {
-    console.error(err);
-    toastr.error("Failed to download QR code.");
-  }
-});
-
 // Register service worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js')
