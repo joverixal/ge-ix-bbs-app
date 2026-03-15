@@ -6,7 +6,7 @@ const urlsToCache = [
   '/assets/js/config.js',
   '/assets/js/auth.js',
   '/assets/images/app-icon.png',
-  '/assets/images/anhs-2010-logo.png',
+  '/assets/images/anhs-2011-logo.png',
   '/assets/vendor/bootstrap.min.css',
   '/assets/vendor/bootstrap.bundle.min.js',
   '/assets/vendor/bootstrap-icons.css',
