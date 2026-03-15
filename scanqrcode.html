@@ -108,12 +108,6 @@ function onScanSuccess(decodedText, decodedResult) {
         const data = JSON.parse(decodedText);
 
         $('#user-name').text(data.firstName + ' ' + data.lastName);
-        $('#user-batch').text(data.batchYear);
-        $('#user-gender').text(data.gender);
-        $('#user-birthdate').text(data.birthdate);
-        $('#user-contact').text(data.contact);
-        $('#user-address').text(data.address);
-        $('#user-tshirt').text(data.tshirt);
 
         $('.user-info').show();
         toastr.success("QR Code scanned successfully!");
