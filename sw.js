@@ -12,7 +12,8 @@ const urlsToCache = [
   '/assets/vendor/bootstrap-icons.css',
   '/assets/vendor/jquery.min.js',
   '/assets/vendor/toastr.min.css',
-  '/assets/vendor/toastr.min.js'
+  '/assets/vendor/toastr.min.js',
+  '/assets/vendor/jquery.qrcode.min.js',
 ];
 
 self.addEventListener('install', e => {
