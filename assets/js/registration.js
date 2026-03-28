@@ -142,12 +142,16 @@ $(document).ready(function () {
   }
 
   function generateQRCode(){
-    const firstname = $('#inp-firstname').val().trim().toUpperCase();
-    var currentDateTime = moment().format("YYYYMMDD hhmmA"); // format as you like
-    const fileName = `${firstname}_${currentDateTime}`;
-
     const guidId = '123e4567-e89b-12d3-a456-426614174000';
-
+    const firstname = $('#inp-firstname').val().trim().toUpperCase();
+    const currentDateTime = moment().format("YYYYMMDD hhmmA"); // format as you like
+    const fileName = `${firstname}_${currentDateTime}`;
+    const baseUrl = "https://your-verification-link.com";
+    // Build the full link dynamically
+    const verificationUrl = `${baseUrl}?id=${guidId}`;
+    // Update link href and text
+    $("#verification-link").attr("href", verificationUrl).text("Check Registration Status");
+    
     // Generate QR code
     // JSON data to encode in QR
     const qrData = JSON.stringify({
