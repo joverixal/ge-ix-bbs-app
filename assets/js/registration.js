@@ -152,9 +152,9 @@ $(document).ready(function () {
       // Clear previous QR
       $("#qrcode").empty();
   
-      // Generate temporary QR
+      // Generate QR code
       const qrData = JSON.stringify({ Id: guidId });
-      new QRCode($("#qrcode")[0], {
+      const qr = new QRCode($("#qrcode")[0], {
           text: qrData,
           width: 200,
           height: 200,
@@ -163,52 +163,54 @@ $(document).ready(function () {
           correctLevel: QRCode.CorrectLevel.H
       });
   
-      setTimeout(function() {
-        const qrImg = $("#qrcode img")[0];
-        if (!qrImg) return;
-    
-        // Wait for the QR image to fully load
-        qrImg.onload = function() {
-            const margin = 15;
-            const qrSize = 200;
-            const textSpace = 50;
-            const canvasWidth = qrSize + margin * 2;
-            const canvasHeight = qrSize + textSpace + margin * 2;
-    
-            const canvas = document.createElement('canvas');
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
-            const ctx = canvas.getContext('2d');
-    
-            // White background
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-            // Draw QR code
-            ctx.drawImage(qrImg, margin, margin, qrSize, qrSize);
-    
-            // Add text
-            ctx.textAlign = "center";
-            ctx.fillStyle = "#000000";
-            ctx.font = "bold 16px Arial";
-            ctx.fillText(eventTitle, canvasWidth / 2, qrSize + margin + 20);
-            ctx.font = "14px Arial";
-            ctx.fillText(fullName, canvasWidth / 2, qrSize + margin + 40);
-    
-            // Replace QR div with canvas
-            $("#qrcode").empty().append(canvas);
-            $("#qrcode canvas").css({ display: "block", margin: "0 auto" });
-    
-            // Download button
-            $("#btn-download-qr").off("click").on("click", function(e) {
-                e.preventDefault();
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL("image/png");
-                link.download = `ANHS_RUN_QR_${fileName}.png`;
-                link.click();
-            });
-        };
-    }, 100);
+      // Wait a short time to ensure QR is rendered
+      setTimeout(() => {
+          const qrImg = $("#qrcode img")[0] || $("#qrcode canvas")[0]; // fallback for canvas-based QR
+          if (!qrImg) return;
+  
+          const margin = 15;
+          const qrSize = 200;
+          const textSpace = 50;
+          const canvasWidth = qrSize + margin * 2;
+          const canvasHeight = qrSize + textSpace + margin * 2;
+  
+          const canvas = document.createElement('canvas');
+          canvas.width = canvasWidth;
+          canvas.height = canvasHeight;
+          const ctx = canvas.getContext('2d');
+  
+          // White background
+          ctx.fillStyle = "#ffffff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+          // Draw QR code (works for <img> or <canvas>)
+          if (qrImg.tagName === "IMG") {
+              ctx.drawImage(qrImg, margin, margin, qrSize, qrSize);
+          } else if (qrImg.tagName === "CANVAS") {
+              ctx.drawImage(qrImg, margin, margin, qrSize, qrSize);
+          }
+  
+          // Add text
+          ctx.textAlign = "center";
+          ctx.fillStyle = "#000000";
+          ctx.font = "bold 16px Arial";
+          ctx.fillText(eventTitle, canvasWidth / 2, qrSize + margin + 20);
+          ctx.font = "14px Arial";
+          ctx.fillText(fullName, canvasWidth / 2, qrSize + margin + 40);
+  
+          // Replace QR div with canvas
+          $("#qrcode").empty().append(canvas);
+          $("#qrcode canvas").css({ display: "block", margin: "0 auto" });
+  
+          // Download button
+          $("#btn-download-qr").off("click").on("click", function(e) {
+              e.preventDefault();
+              const link = document.createElement('a');
+              link.href = canvas.toDataURL("image/png");
+              link.download = `ANHS_RUN_QR_${fileName}.png`;
+              link.click();
+          });
+      }, 200); // slightly longer to ensure QR renders fully
   }
   
   function getCurrentDateTime() {
