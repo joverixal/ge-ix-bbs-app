@@ -97,10 +97,9 @@ $(document).ready(function () {
   $('#btn-back-review').on('click', function() {showTab('#tab-payment', 3);});
   
   $('#btn-next-review').on('click', function() {
+      generateQRCode();
       showTab('#tab-success', 5);
   });
-
-  generateQRCode();
 
   function emptyStateLabel(value){
     if(value == '')
