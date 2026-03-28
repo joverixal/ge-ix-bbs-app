@@ -11,81 +11,42 @@ $(document).ready(function () {
   maskContactNumber();
   loadBatchYear();
 
-  function buildSuccessContent() {
-      const guidId = '123e4567-e89b-12d3-a456-426614174000';
-      const firstname = $('#inp-firstname').val().trim().toUpperCase();
-      const lastname = $('#inp-lastname').val().trim().toUpperCase();
-      const fullName = `${firstname} ${lastname}`;
-      const eventTitle = "ANHS Alumni Run 2026";
-      const currentDateTime = getCurrentDateTime();
-      const fileName = `${firstname}_${currentDateTime}`;
-      const baseUrl = "https://your-verification-link.com";
-      const verificationUrl = `${baseUrl}?id=${guidId}`;
-  
-      $("#verification-link").attr("href", verificationUrl).text("Check Registration Status");
-  
-      // Clear any previous QR
-      $("#qrcode").empty();
-  
-      // Generate QR code to a hidden div
-      const qrData = JSON.stringify({ Id: guidId });
-      var qrCode = new QRCode($("#qrcode")[0], {
-          text: qrData,
-          width: 200,
-          height: 200,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-      });
-  
-      // Wait a little to ensure QR code is generated, then overlay text
-      setTimeout(function() {
-          // Get QR code image
-          const qrImg = $("#qrcode img")[0];
-          if (!qrImg) return;
-  
-          // Create a canvas
-          const canvas = document.createElement('canvas');
-          const size = 250; // final canvas size
-          canvas.width = size;
-          canvas.height = size + 50; // extra space for text
-          const ctx = canvas.getContext('2d');
-  
-          // Draw QR code
-          ctx.drawImage(qrImg, 25, 0, 200, 200);
-  
-          // Add event title
-          ctx.font = "bold 16px Arial";
-          ctx.textAlign = "center";
-          ctx.fillStyle = "#000";
-          ctx.fillText(eventTitle, size / 2, 220);
-  
-          // Add participant name
-          ctx.font = "14px Arial";
-          ctx.fillText(fullName, size / 2, 240);
-  
-          // Replace QR div with canvas
-          $("#qrcode").empty().append(canvas);
-  
-          // Download button functionality
-          $("#btn-download-qr").off("click").on("click", function() {
-              const link = document.createElement('a');
-              link.href = canvas.toDataURL("image/png");
-              link.download = `ANHS_RUN_QR_${fileName}.png`;
-              link.click();
-          });
-      }, 300);
-  }
-  
-  // Corrected getCurrentDateTime function
-  function getCurrentDateTime() {
-      const now = new Date();
-      return now.getFullYear() +
-             String(now.getMonth() + 1).padStart(2, '0') +
-             String(now.getDate()).padStart(2, '0') + "_" +
-             String(now.getHours()).padStart(2, '0') +
-             String(now.getMinutes()).padStart(2, '0') +
-             String(now.getSeconds()).padStart(2, '0');
+  function validateTab(tabId) {
+      let valid = true;
+      // Ride Category validation
+      if(tabId=='#tab-ride' && $('input[name="rideCategory"]:checked').length===0){
+          toastr.error("Please select a category.");
+          valid=false;
+      }
+      // Payment file validation
+      if(tabId=='#tab-payment' && $('#inp-payment-file').get(0).files.length===0){
+          toastr.error("Please upload Payment Proof.");
+          valid=false;
+      }
+      // Birthdate ≥10 years
+      if(tabId=='#tab-basic'){
+        $(tabId).find('input[required]').each(function() {
+          if(!this.checkValidity()) { this.reportValidity(); valid=false; return false; }
+        });
+
+        if(valid){
+          const contact = $('#inp-contact').cleanVal();
+          const gender = $('input[name="gender"]:checked').val();
+          const tshirt = $('input[name="tshirt"]:checked').val();
+          if(contact.length!==11){
+              toastr.error("Contact number must be 11 digits.");
+              valid=false;
+          }else if(!gender){
+              toastr.error("Please select a gender.");
+              valid=false;
+          }
+          else if(!tshirt){
+                toastr.error("Please select a T-Shirt size.");
+                valid=false;
+            }  
+        }
+      }
+      return valid;
   }
 
   // Next buttons
