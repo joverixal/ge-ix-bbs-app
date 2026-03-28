@@ -136,91 +136,85 @@ $(document).ready(function () {
   }
 
  function buildSuccessContent() {
-      const guidId = '123e4567-e89b-12d3-a456-426614174000';
-      const firstname = $('#inp-firstname').val().trim().toUpperCase();
-      const lastname = $('#inp-lastname').val().trim().toUpperCase();
-      const fullName = `${firstname} ${lastname}`;
-      const eventTitle = "ANHS Alumni Run 2026";
-      const currentDateTime = getCurrentDateTime();
-      const fileName = `${firstname}_${currentDateTime}`;
-      const baseUrl = "https://your-verification-link.com";
-      const verificationUrl = `${baseUrl}?id=${guidId}`;
-  
-      $("#verification-link").attr("href", verificationUrl).text("Check Registration Status");
-  
-      // Clear previous QR
-      $("#qrcode").empty();
-  
-      // Generate QR code (temporary, hidden)
-      const qrData = JSON.stringify({ Id: guidId });
-      new QRCode($("#qrcode")[0], {
-          text: qrData,
-          width: 200,
-          height: 200,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-      });
-  
-      // Wait for QR to render
-      setTimeout(function() {
-          const qrImg = $("#qrcode img")[0];
-          if (!qrImg) return;
-  
-          // Create canvas big enough for QR + text
-          const qrSize = 200;       // size of the QR
-          const textSpace = 50;     // space for event title + name
-          const canvas = document.createElement('canvas');
-          canvas.width = qrSize;
-          canvas.height = qrSize + textSpace;
-          const ctx = canvas.getContext('2d');
-  
-          // Draw QR scaled to fit canvas
-          ctx.drawImage(qrImg, 0, 0, qrSize, qrSize);
-  
-          // Text styling (outline for readability)
-          ctx.textAlign = "center";
-          ctx.fillStyle = "#000";
-          ctx.strokeStyle = "#fff";
-          ctx.lineWidth = 3;
-  
-          // Event title
-          ctx.font = "bold 16px Arial";
-          ctx.strokeText(eventTitle, canvas.width / 2, qrSize + 18);
-          ctx.fillText(eventTitle, canvas.width / 2, qrSize + 18);
-  
-          // Participant name
-          ctx.font = "14px Arial";
-          ctx.strokeText(fullName, canvas.width / 2, qrSize + 38);
-          ctx.fillText(fullName, canvas.width / 2, qrSize + 38);
-  
-          // Replace QR div with canvas
-          $("#qrcode").empty().append(canvas);
-          $("#qrcode canvas").css({
-              display: "block",
-              margin: "0 auto"
-          });
-  
-          // Download button
-          $("#btn-download-qr").off("click").on("click", function(e) {
-              e.preventDefault();
-              const link = document.createElement('a');
-              link.href = canvas.toDataURL("image/png");
-              link.download = `ANHS_RUN_QR_${fileName}.png`;
-              link.click();
-          });
-      }, 300);
-  }
-  
-  // Corrected date-time function
-  function getCurrentDateTime() {
-      const now = new Date();
-      return now.getFullYear() +
-             String(now.getMonth() + 1).padStart(2, '0') +
-             String(now.getDate()).padStart(2, '0') + "_" +
-             String(now.getHours()).padStart(2, '0') +
-             String(now.getMinutes()).padStart(2, '0') +
-             String(now.getSeconds()).padStart(2, '0');
-  }
+    const guidId = '123e4567-e89b-12d3-a456-426614174000';
+    const firstname = $('#inp-firstname').val().trim().toUpperCase();
+    const lastname = $('#inp-lastname').val().trim().toUpperCase();
+    const fullName = `${firstname} ${lastname}`;
+    const eventTitle = "ANHS Alumni Run 2026";
+    const currentDateTime = getCurrentDateTime();
+    const fileName = `${firstname}_${currentDateTime}`;
+    const baseUrl = "https://your-verification-link.com";
+    const verificationUrl = `${baseUrl}?id=${guidId}`;
+
+    // Update verification link
+    $("#verification-link").attr("href", verificationUrl).text("Check Registration Status");
+
+    // Clear previous QR
+    $("#qrcode").empty();
+
+    // Generate QR code temporarily
+    const qrData = JSON.stringify({ Id: guidId });
+    new QRCode($("#qrcode")[0], {
+        text: qrData,
+        width: 200,
+        height: 200,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    setTimeout(function() {
+        const qrImg = $("#qrcode img")[0];
+        if (!qrImg) return;
+
+        // Create canvas for QR + text
+        const qrSize = 200;
+        const textSpace = 50;
+        const canvas = document.createElement('canvas');
+        canvas.width = qrSize;
+        canvas.height = qrSize + textSpace;
+        const ctx = canvas.getContext('2d');
+
+        // Fill white background
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw QR code
+        ctx.drawImage(qrImg, 0, 0, qrSize, qrSize);
+
+        // Add event title (plain text)
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#000000"; // black text
+        ctx.font = "bold 16px Arial";
+        ctx.fillText(eventTitle, canvas.width / 2, qrSize + 18);
+
+        // Add participant name (plain text)
+        ctx.font = "14px Arial";
+        ctx.fillText(fullName, canvas.width / 2, qrSize + 38);
+
+        // Replace QR div with canvas
+        $("#qrcode").empty().append(canvas);
+        $("#qrcode canvas").css({ display: "block", margin: "0 auto" });
+
+        // Download button without refresh
+        $("#btn-download-qr").off("click").on("click", function(e) {
+            e.preventDefault();
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL("image/png");
+            link.download = `ANHS_RUN_QR_${fileName}.png`;
+            link.click();
+        });
+    }, 300);
+}
+
+function getCurrentDateTime() {
+    const now = new Date();
+    return now.getFullYear() +
+           String(now.getMonth() + 1).padStart(2, '0') +
+           String(now.getDate()).padStart(2, '0') + "_" +
+           String(now.getHours()).padStart(2, '0') +
+           String(now.getMinutes()).padStart(2, '0') +
+           String(now.getSeconds()).padStart(2, '0');
+}
 
 });
