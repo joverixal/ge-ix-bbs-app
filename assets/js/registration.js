@@ -142,15 +142,19 @@ $(document).ready(function () {
   function generateQRCode(){
     const firstname = $('#inp-firstname').val().trim().toUpperCase();
     var currentDateTime = moment().format("YYYYMMDD hhmmA"); // format as you like
-    
     const fileName = `${firstname}_${currentDateTime}`;
-    
-    // Replace this with actual registration ID or verification URL
-    var registrationData = "https://your-verification-link.com?userId=12345";
+
+    const guidId = '123e4567-e89b-12d3-a456-426614174000';
+
+    // Generate QR code
+    // JSON data to encode in QR
+    const qrData = JSON.stringify({
+        Id: guidId,
+    });
 
     // Generate QR Code
     var qrcode = new QRCode($("#qrcode")[0], {
-      text: registrationData,
+      text: qrData,
       width: 150,
       height: 150,
       colorDark : "#000000",
