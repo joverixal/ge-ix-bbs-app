@@ -92,8 +92,14 @@ $(document).ready(function () {
   $('#btn-back-review').on('click', function() {showTab('#tab-payment', 3);});
   
   $('#btn-next-review').on('click', function() {
-      buildSuccessContent();
-      showTab('#tab-success', 5);
+    buildSuccessContent();
+
+    // Hide all tabs and step indicators
+    $('#frm-registration .tab-pane').hide(); // hide all tab panes
+    $('.step-indicator').hide();             // hide step indicators
+
+    // Show only the success content
+    $('#tab-success').show();
   });
 
   function emptyStateLabel(value){
