@@ -57,11 +57,11 @@ $(document).ready(function () {
           }else if(contact.length!==11){
               toastr.error("Contact number must be 11 digits.");
               valid=false;
-          }else if(gender == ''){
+          }else if(!gender){
               toastr.error("Please select a gender.");
               valid=false;
           }
-          else if(tshirt == ''){
+          else if(!tshirt){
                 toastr.error("Please select a T-Shirt size.");
                 valid=false;
             }  
