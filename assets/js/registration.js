@@ -138,62 +138,48 @@ $(document).ready(function () {
   function buildSuccessContent() {
       const guidId = '123e4567-e89b-12d3-a456-426614174000';
       const firstname = $('#inp-firstname').val().trim().toUpperCase();
-      const lastname = $('#inp-lastname').val().trim().toUpperCase();
-      const fullName = `${firstname} ${lastname}`;
-      const eventTitle = "ANHS Alumni Run 2026";
       const currentDateTime = getCurrentDateTime();
       const fileName = `${firstname}_${currentDateTime}`;
       const baseUrl = "https://your-verification-link.com";
       const verificationUrl = `${baseUrl}?id=${guidId}`;
   
-      // Display title and participant name separately
+      // Update verification link
       $("#verification-link").attr("href", verificationUrl).text("Check Registration Status");
   
-      // Clear any previous QR
+      // Clear previous QR
       $("#qrcode").empty();
   
-      // Generate QR code to a hidden div
+      // Generate QR code
       const qrData = JSON.stringify({ Id: guidId });
-      var qrCode = new QRCode($("#qrcode")[0], {
+      const qrCode = new QRCode($("#qrcode")[0], {
           text: qrData,
-          width: 200,
-          height: 200,
+          width: 150,   // final QR size
+          height: 150,
           colorDark: "#000000",
           colorLight: "#ffffff",
           correctLevel: QRCode.CorrectLevel.H
       });
   
-      // Wait a little to ensure QR code is generated, then overlay text
+      // Wait for QR code image to render
       setTimeout(function() {
-          // Get QR code image
           const qrImg = $("#qrcode img")[0];
           if (!qrImg) return;
   
-          // Create a canvas
+          // Create canvas same size as QR for download
           const canvas = document.createElement('canvas');
-          const size = 150;
-          canvas.width = 150;
-          canvas.height = 150 + 50; // 50px for text
+          canvas.width = qrImg.naturalWidth || 150;
+          canvas.height = qrImg.naturalHeight || 150;
           const ctx = canvas.getContext('2d');
   
-          // Draw QR code
-          ctx.drawImage(qrImg, 25, 0, 200, 200);
+          // Draw QR image
+          ctx.drawImage(qrImg, 0, 0, canvas.width, canvas.height);
   
-          // Add event title
-          ctx.font = "bold 16px Arial";
-          ctx.textAlign = "center";
-          ctx.fillStyle = "#000";
-          ctx.fillText(eventTitle, size / 2, 220);
-  
-          // Add participant name
-          ctx.font = "14px Arial";
-          ctx.fillText(fullName, size / 2, 240);
-  
-          // Replace QR div with canvas
+          // Replace div content with canvas (centered via CSS)
           $("#qrcode").empty().append(canvas);
   
-          // Download button functionality
-          $("#btn-download-qr").off("click").on("click", function() {
+          // Download button
+          $("#btn-download-qr").off("click").on("click", function(e) {
+              e.preventDefault();
               const link = document.createElement('a');
               link.href = canvas.toDataURL("image/png");
               link.download = `ANHS_RUN_QR_${fileName}.png`;
@@ -202,7 +188,7 @@ $(document).ready(function () {
       }, 300);
   }
   
-  // Corrected getCurrentDateTime function
+  // Get current date/time string for file name
   function getCurrentDateTime() {
       const now = new Date();
       return now.getFullYear() +
