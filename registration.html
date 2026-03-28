@@ -74,6 +74,20 @@
   border-color: #00B7C2;
   box-shadow: 0 0 0 0.2rem rgba(0,183,194,0.25);
 }
+
+@media (max-width: 576px) {
+  .form-floating input,
+  .form-floating select {
+    font-size: 0.9rem;
+    height: 45px;
+  }
+  
+  .row.g-3 {
+    --bs-gutter-x: 0.5rem;
+    --bs-gutter-y: 0.5rem;
+  }
+}
+  
 </style>
 </head>
   
@@ -96,7 +110,7 @@
     </div>
 
     <!-- Last Name -->
-    <div class="col-md-6">
+    <div class="col-6 col-md-6">
       <div class="form-floating">
         <input type="text" id="inp-lastname" class="form-control" placeholder="Last Name" required>
         <label for="inp-lastname">Last Name<span style="color:red;">*</span></label>
@@ -104,7 +118,7 @@
     </div>
 
     <!-- Gender -->
-    <div class="col-md-6">
+    <div class="col-6 col-md-6">
       <div class="form-floating">
         <select id="inp-gender" class="form-control" required>
           <option value="" selected disabled>Select Gender</option>
@@ -116,7 +130,7 @@
     </div>
 
     <!-- Birthdate -->
-    <div class="col-md-6">
+    <div class="col-6 col-md-6">
       <div class="form-floating">
         <input type="date" id="inp-birthdate" class="form-control" required>
         <label for="inp-birthdate">Birthdate<span style="color:red;">*</span></label>
@@ -124,7 +138,7 @@
     </div>
 
     <!-- Contact Number -->
-    <div class="col-md-6">
+    <div class="col-6 col-md-6">
       <div class="form-floating">
         <input type="text" id="inp-contact" class="form-control" required>
         <label for="inp-contact">Contact Number<span style="color:red;">*</span></label>
@@ -140,7 +154,7 @@
     </div>
 
     <!-- Batch Year -->
-    <div class="col-md-6">
+    <div class="col-6 col-md-6">
       <div class="form-floating">
         <input type="text" id="inp-batchyear" class="form-control">
         <label for="inp-batchyear">Batch Year</label>
