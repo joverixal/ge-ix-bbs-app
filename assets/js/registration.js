@@ -153,7 +153,7 @@ $(document).ready(function () {
     $("#qrcode").empty();
 
     const qrSize = 200;
-    const margin = 15;
+    const margin = 5;
     const textSpace = 50;
     const canvasWidth = qrSize + margin * 2;
     const canvasHeight = qrSize + textSpace + margin * 2;
