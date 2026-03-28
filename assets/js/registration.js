@@ -77,13 +77,13 @@ $(document).ready(function () {
 
     if(validateTab('#tab-payment')){
       // Populate Review tab
-      $('#review-fullname').text($('#inp-firstname').val() + ' ' + $('#inp-lastname').val());
+      $('#review-fullname').text($('#inp-firstname').val().trim() + ' ' + $('#inp-lastname').val().trim());
       $('#review-gender').text($('#sel-gender').val());
       $('#review-birthdate').text($('#inp-birthdate').val());
       $('#review-contact').text($('#inp-contact').val());
-      $('#review-batch').text($('#sel-batch-year').val());
-      $('#review-address').text($('#inp-address').val());
-      $('#review-tshirt').text($('#sel-tshirt').val());
+      $('#review-batch').text(emptyStateLabel($('#sel-batch-year').val().trim()));
+      $('#review-address').text($('#inp-address').val().trim());
+      $('#review-tshirt').text($('#sel-tshirt').val().trim());
       $('#review-category').text($('input[name="rideCategory"]:checked').val());
       $('#review-payment').text($('#inp-payment-file').val() ? 'Uploaded' : 'Not uploaded');
   
@@ -99,6 +99,12 @@ $(document).ready(function () {
   $('#btn-next-review').on('click', function() {
       showTab('#tab-success', 5);
   });
+
+  function emptyStateLabel(value){
+    if(value == '')
+      return '--'
+    return value;
+  }
 
   function loadBatchYear(){
     const currentYear = 2026;
