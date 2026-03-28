@@ -45,7 +45,7 @@ $(document).ready(function () {
           if(!this.checkValidity()) { this.reportValidity(); valid=false; return false; }
         });
 
-        if(!valid){
+        if(valid){
           const birth = new Date($('#inp-birthdate').val());
           const minDate = new Date(); minDate.setFullYear(minDate.getFullYear()-10);
           const contact = $('#inp-contact').cleanVal();
