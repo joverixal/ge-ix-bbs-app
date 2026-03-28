@@ -26,13 +26,15 @@
 <script src="assets/js/registration.js"></script>
 
 <style>
-body {
-  background-color: #f8f9fa;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-}
+  body {
+    background: linear-gradient(135deg, #7A2BE2, #00B7C2);
+    min-height: 100vh;
+  }
+  .container {
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
 
 .register-card {
   width: 100%;
@@ -51,34 +53,34 @@ body {
 }
 
 .register-title {
-  color: #E41200;
+  color: #5A1FAF;
   font-weight: 700;
-  margin-bottom:1.5rem;
 }
 
 .register-btn {
-  background-color: #FFA600 !important;
+  background: linear-gradient(135deg, #7A2BE2, #00B7C2) !important;
   color: #fff !important;
-  border:none;
-  font-weight:600;
-  font-size:1.25rem;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:0.5rem;
-  transition: all 0.15s ease-in-out;
+  border: none;
 }
 
-.register-btn:hover{ background:#e69500 !important; }
+.register-btn:hover {
+  opacity: 0.9;
+}
 .register-btn:active, .register-btn:focus{ background:#cc8400 !important; transform: scale(0.97); }
 
 .form-floating input, .form-floating select { height:50px; font-size:1rem; }
-.form-control:focus { border-color:#FFA600; box-shadow:0 0 0 0.2rem rgba(255,166,0,0.25);}
+  
+.form-control:focus {
+  border-color: #00B7C2;
+  box-shadow: 0 0 0 0.2rem rgba(0,183,194,0.25);
+}
 </style>
 </head>
+  
 <body>
 
-<div class="register-card">
+<div class="container py-3" style="max-width: 700px;">
+  
   <div class="text-center">
     <img src="assets/images/anhs-2011-logo.png" class="register-logo" alt="ANHS 2011">
     <h3 class="register-title">ANHS 2011 Registration</h3>
@@ -116,7 +118,7 @@ body {
     <!-- Birthdate -->
     <div class="col-md-6">
       <div class="form-floating">
-        <input type="date" id="inp-birthdate" class="form-control" placeholder="Birthdate" required>
+        <input type="date" id="inp-birthdate" class="form-control" required>
         <label for="inp-birthdate">Birthdate<span style="color:red;">*</span></label>
       </div>
     </div>
@@ -124,7 +126,7 @@ body {
     <!-- Contact Number -->
     <div class="col-md-6">
       <div class="form-floating">
-        <input type="text" id="inp-contact" class="form-control" placeholder="Contact Number" required>
+        <input type="text" id="inp-contact" class="form-control" required>
         <label for="inp-contact">Contact Number<span style="color:red;">*</span></label>
       </div>
     </div>
@@ -132,7 +134,7 @@ body {
     <!-- Address -->
     <div class="col-md-6">
       <div class="form-floating">
-        <input type="text" id="inp-address" class="form-control" placeholder="Address" required>
+        <input type="text" id="inp-address" class="form-control" required>
         <label for="inp-address">Address<span style="color:red;">*</span></label>
       </div>
     </div>
@@ -140,7 +142,7 @@ body {
     <!-- Batch Year -->
     <div class="col-md-6">
       <div class="form-floating">
-        <input type="text" id="inp-batchyear" class="form-control" placeholder="Batch Year">
+        <input type="text" id="inp-batchyear" class="form-control">
         <label for="inp-batchyear">Batch Year</label>
       </div>
     </div>
@@ -164,6 +166,7 @@ body {
   <button id="btn-register" class="btn register-btn w-100 py-3 mt-3">
     <i class="bi bi-person-plus me-2"></i> Register
   </button>
+
 </div>
 
 <div id="footer-placeholder"></div>
