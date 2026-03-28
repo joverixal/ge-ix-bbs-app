@@ -91,12 +91,34 @@
 }
 
 .step-indicator {
-  width: 30px; height:30px;
-  border-radius:50%; line-height:30px;
-  background:#ccc; color:#fff; font-weight:600; text-align:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+  cursor: pointer;
 }
-.step-indicator.active { background:#7A2BE2; }
-.step-indicator.completed { background:#00B7C2; }
+.step-number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ccc;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.step-indicator.active .step-number { background: #7A2BE2; }
+.step-indicator.completed .step-number { background: #00B7C2; }
+.step-title {
+  font-size: 0.8rem;
+  text-align: center;
+  color: #333;
+}
+.step-indicator.active .step-title { font-weight: 700; color: #7A2BE2; }
+.step-indicator.completed .step-title { color: #00B7C2; }
+  
 .tab-pane { display:none; }
 .tab-pane.active { display:block; }
 
@@ -113,10 +135,22 @@
 
   <!-- Step Indicators -->
   <div class="d-flex justify-content-between mb-4">
-    <div class="step-indicator active" data-step="1">1</div>
-    <div class="step-indicator" data-step="2">2</div>
-    <div class="step-indicator" data-step="3">3</div>
-    <div class="step-indicator" data-step="4">4</div>
+    <div class="step-indicator active" data-step="1">
+      <div class="step-number">1</div>
+      <div class="step-title">Basic Info</div>
+    </div>
+    <div class="step-indicator" data-step="2">
+      <div class="step-number">2</div>
+      <div class="step-title">Ride Category</div>
+    </div>
+    <div class="step-indicator" data-step="3">
+      <div class="step-number">3</div>
+      <div class="step-title">Payment</div>
+    </div>
+    <div class="step-indicator" data-step="4">
+      <div class="step-number">4</div>
+      <div class="step-title">Success</div>
+    </div>
   </div>
 
   <form id="frm-registration">
