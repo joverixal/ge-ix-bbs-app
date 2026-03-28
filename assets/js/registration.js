@@ -7,6 +7,8 @@ $(document).ready(function () {
       "preventDuplicates": true
   };
 
+  limitBirthdate();
+  maskContactNumber();
   loadBatchYear();
 
   const btnRegister = $('#btn-register');
@@ -45,6 +47,26 @@ $(document).ready(function () {
     }
 
     $('#sel-batch-year').html(options);
+  }
+
+  function limitBirthdate(){
+    // Get today's date
+    let today = new Date();
+    // Calculate date 10 years ago
+    let year = today.getFullYear() - 10;
+    let month = (today.getMonth() + 1).toString().padStart(2, '0'); // month is 0-indexed
+    let day = today.getDate().toString().padStart(2, '0');
+    let maxDate = `${year}-${month}-${day}`;
+
+    // Set max attribute of birthdate input
+    $('#inp-birthdate').attr('max', maxDate);
+  }
+
+  function maskContactNumber(){
+    // Apply Philippine phone mask: 0912-345-6789
+    $('#inp-contact').mask('0000-000-0000', {
+        placeholder: "0912-345-6789"
+    });
   }
 
 });
