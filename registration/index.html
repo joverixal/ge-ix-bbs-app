@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ge-iX FR App - ANHS Alumni Run 2026</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#E41200">
+<link rel="icon" type="image/png" href="../assets/images/app-icon.png">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="../assets/vendor/bootstrap-icons.css">
+<!-- Toastr CSS -->
+<link rel="stylesheet" href="../assets/vendor/toastr.min.css">
+<link rel="stylesheet" href="../assets/css/footer.css">
+
+<!-- jQuery -->
+<script src="../assets/vendor/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="../assets/vendor/bootstrap.bundle.min.js"></script>
+<!-- Toastr JS -->
+<script src="../assets/vendor/toastr.min.js"></script>
+
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/registration.js"></script>
+
+<style>
+  body {
+    background: linear-gradient(135deg, #7A2BE2, #00B7C2);
+    min-height: 100vh;
+  }
+  .container {
+    background: #ffffff;
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+.register-card {
+  width: 100%;
+  max-width: 700px;
+  border-radius: 1rem;
+  padding: 2rem;
+  border-top: 5px solid #E41200;
+  background: #fff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.register-logo {
+  width: 90px;
+  margin-bottom: 10px;
+}
+
+.register-title {
+  color: #5A1FAF;
+  font-weight: 700;
+}
+
+.register-btn {
+  background: linear-gradient(135deg, #7A2BE2, #00B7C2) !important;
+  color: #fff !important;
+  border: none;
+}
+
+.register-btn:hover {
+  opacity: 0.9;
+}
+.register-btn:active, .register-btn:focus{ background:#cc8400 !important; transform: scale(0.97); }
+
+.form-floating input, .form-floating select { height:50px; font-size:1rem; }
+
+.form-control:focus {
+  border-color: #00B7C2;
+  box-shadow: 0 0 0 0.2rem rgba(0,183,194,0.25);
+}
+
+@media (max-width: 576px) {
+  .form-floating input,
+  .form-floating select {
+    font-size: 0.9rem;
+    height: 45px;
+  }
+
+  .row.g-3 {
+    --bs-gutter-x: 0.5rem;
+    --bs-gutter-y: 0.5rem;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container py-3" style="max-width: 700px;">
+
+  <div class="text-center">
+    <img src="../assets/images/anhs-2011-logo.png" class="register-logo" alt="ANHS 2011">
+    <h3 class="register-title">ANHS Alumni Run 2026</h3>
+  </div>
+
+  <div class="row g-3">
+    <!-- First Name -->
+    <div class="col-6 col-md-6">
+      <div class="form-floating">
+        <input type="text" id="inp-firstname" class="form-control" placeholder="First name" required>
+        <label for="inp-firstname">First name<span style="color:red;">*</span></label>
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <div class="col-6 col-md-6">
+      <div class="form-floating">
+        <input type="text" id="inp-lastname" class="form-control" placeholder="Last name" required>
+        <label for="inp-lastname">Last name<span style="color:red;">*</span></label>
+      </div>
+    </div>
+
+    <!-- Gender -->
+    <div class="col-6 col-md-6">
+      <div class="form-floating">
+        <select id="sel-gender" class="form-control" required>
+          <option value="" selected disabled>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+        <label for="sel-gender">Gender<span style="color:red;">*</span></label>
+      </div>
+    </div>
+
+    <!-- Birthdate -->
+    <div class="col-6 col-md-6">
+      <div class="form-floating">
+        <input type="date" id="inp-birthdate" class="form-control" placeholder="Birthdate" required>
+        <label for="inp-birthdate">Birthdate<span style="color:red;">*</span></label>
+      </div>
+    </div>
+
+    <!-- Contact Number -->
+    <div class="col-6 col-md-6">
+      <div class="form-floating">
+        <input type="text" id="inp-contact" class="form-control" placeholder="Contact number" required>
+        <label for="inp-contact">Contact number</label>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="col-12 col-md-12">
+      <div class="form-floating">
+        <input type="text" id="inp-address" class="form-control" placeholder="Address" required>
+        <label for="inp-address">Address<span style="color:red;">*</span></label>
+      </div>
+    </div>
+
+    <!-- Batch Year -->
+    <div class="col-6 col-md-6">
+      <div class="form-floating">
+        <select id="sel-batch-year" class="form-control" required>
+        </select>
+        <label for="sel-batch-year">Batch year</label>
+      </div>
+    </div>
+
+    <!-- T-Shirt Size -->
+    <div class="col-6 col-md-6">
+      <div class="form-floating">
+        <select id="sel-tshirt" class="form-control">
+          <option value="" selected disabled>Select T-Shirt size</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+        <label for="sel-tshirt">T-Shirt size<span style="color:red;">*</span></label>
+      </div>
+    </div>
+  </div>
+
+  <button id="btn-register" class="btn register-btn w-100 py-3 mt-3">
+    <i class="bi bi-person-plus me-2"></i> Register
+  </button>
+
+</div>
+
+<div id="footer-placeholder"></div>
+<script src="../assets/js/loadFooter.js"></script>
+
+<script>
+</script>
+
+</body>
+</html>
