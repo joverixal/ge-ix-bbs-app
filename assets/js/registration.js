@@ -100,6 +100,8 @@ $(document).ready(function () {
       showTab('#tab-success', 5);
   });
 
+  generateQRCode();
+
   function emptyStateLabel(value){
     if(value == '')
       return '--'
