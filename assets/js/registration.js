@@ -11,29 +11,35 @@ $(document).ready(function () {
   maskContactNumber();
   loadBatchYear();
 
-  const btnRegister = $('#btn-register');
-  btnRegister.click(function(){
-      const runner = {
-          firstName: $('#inp-firstname').val(),
-          lastName: $('#inp-lastname').val(),
-          gender: $('#inp-gender').val(),
-          birthdate: $('#inp-birthdate').val(),
-          batchYear: $('#inp-batchyear').val(),
-          contact: $('#inp-contact').val(),
-          address: $('#inp-address').val(),
-          tshirtSize: $('#inp-tshirt').val()
-      };
-      
-      btnRegister.prop('disabled', true).text('Registered: Directing to QR Code...');
-      toastr.success("Successfully registered. For payment and activation, please contact your batch officer.");
+  // Optional: validate on form submit
+  $('#frm-registration').on('submit', function(e) {
+      let contactNumber = $('#inp-contact').cleanVal(); // get digits only
+      if (contactNumber.length !== 11) {
+          e.preventDefault();
+          toastr.error("Contact number must be exactly 11 digits.");
+      }
 
-    
-    // Wait 4 seconds (4000ms) before executing
-    setTimeout(function() {
-        btnRegister.prop('disabled', false).text('Register');
-        window.location.href = "qrcode.html";
-    }, 10000);
+      const runner = {
+            firstName: $('#inp-firstname').val(),
+            lastName: $('#inp-lastname').val(),
+            gender: $('#inp-gender').val(),
+            birthdate: $('#inp-birthdate').val(),
+            batchYear: $('#inp-batchyear').val(),
+            contact: $('#inp-contact').val(),
+            address: $('#inp-address').val(),
+            tshirtSize: $('#inp-tshirt').val()
+        };
+
+        const btnRegister = $('#btn-register');
+        btnRegister.prop('disabled', true).text('Registered: Directing to QR Code...');
+        toastr.success("Successfully registered. For payment and activation, please contact your batch officer.");
+  
       
+      // Wait 4 seconds (4000ms) before executing
+      setTimeout(function() {
+          btnRegister.prop('disabled', false).text('Register');
+          window.location.href = "qrcode.html";
+      }, 10000);
   });
 
   function loadBatchYear(){
