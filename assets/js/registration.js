@@ -146,15 +146,15 @@ $(document).ready(function () {
       const baseUrl = "https://your-verification-link.com";
       const verificationUrl = `${baseUrl}?id=${guidId}`;
   
-      // Display title and participant name separately
+      // Display title and participant name
       $("#verification-link").attr("href", verificationUrl).text("Check Registration Status");
   
-      // Clear any previous QR
+      // Clear previous QR
       $("#qrcode").empty();
   
-      // Generate QR code to a hidden div
+      // Generate QR code
       const qrData = JSON.stringify({ Id: guidId });
-      var qrCode = new QRCode($("#qrcode")[0], {
+      new QRCode($("#qrcode")[0], {
           text: qrData,
           width: 200,
           height: 200,
@@ -163,47 +163,56 @@ $(document).ready(function () {
           correctLevel: QRCode.CorrectLevel.H
       });
   
-      // Wait a little to ensure QR code is generated, then overlay text
+      // Wait for QR image to be ready
       setTimeout(function() {
-          // Get QR code image
           const qrImg = $("#qrcode img")[0];
           if (!qrImg) return;
   
-          // Create a canvas
+          // Create canvas for QR + text
           const canvas = document.createElement('canvas');
-          const size = 250; // final canvas size
+          const size = 250;
           canvas.width = size;
-          canvas.height = size + 50; // extra space for text
+          canvas.height = size + 60; // extra space for text
           const ctx = canvas.getContext('2d');
   
           // Draw QR code
           ctx.drawImage(qrImg, 25, 0, 200, 200);
   
-          // Add event title
-          ctx.font = "bold 16px Arial";
+          // Text settings: white outline for visibility
           ctx.textAlign = "center";
           ctx.fillStyle = "#000";
-          ctx.fillText(eventTitle, size / 2, 220);
+          ctx.font = "bold 16px Arial";
+          ctx.lineWidth = 2;
+          ctx.strokeStyle = "#fff";
   
-          // Add participant name
+          // Draw event title with outline
+          ctx.strokeText(eventTitle, size / 2, 225);
+          ctx.fillText(eventTitle, size / 2, 225);
+  
+          // Draw participant name with outline
           ctx.font = "14px Arial";
-          ctx.fillText(fullName, size / 2, 240);
+          ctx.strokeText(fullName, size / 2, 245);
+          ctx.fillText(fullName, size / 2, 245);
   
           // Replace QR div with canvas
           $("#qrcode").empty().append(canvas);
   
-          // Download button functionality
+          // Download QR code without refreshing page
           $("#btn-download-qr").off("click").on("click", function(e) {
-            e.preventDefault();
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL("image/png");
-            link.download = `ANHS_RUN_QR_${fileName}.png`;
-            link.click();
+              e.preventDefault();
+              const canvasEl = $("#qrcode canvas")[0];
+              if (!canvasEl) {
+                  alert("QR code not generated yet.");
+                  return;
+              }
+              const link = document.createElement('a');
+              link.href = canvasEl.toDataURL("image/png");
+              link.download = `ANHS_RUN_QR_${fileName}.png`;
+              link.click();
           });
       }, 300);
   }
   
-  // Corrected getCurrentDateTime function
   function getCurrentDateTime() {
       const now = new Date();
       return now.getFullYear() +
