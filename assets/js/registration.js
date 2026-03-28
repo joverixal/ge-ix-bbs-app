@@ -11,63 +11,55 @@ $(document).ready(function () {
   maskContactNumber();
   loadBatchYear();
 
-  // Basic Info -> Ride Category
-  $('#btn-next-basic').click(function() {
-      if (validateCurrentTab('#tab-basic')) {
-          $('#tab-ride-tab').tab('show');
+  // Show tab and update step indicator
+  function showTab(tabId, stepNumber) {
+      $('.tab-pane').removeClass('active');
+      $(tabId).addClass('active');
+      $('.step-indicator').removeClass('active');
+      $('.step-indicator').each(function(i){ if(i+1 <= stepNumber) $(this).addClass('active'); });
+  }
+
+  function validateTab(tabId) {
+      let valid = true;
+      $(tabId).find('input[required], select[required]').each(function() {
+          if(!this.checkValidity()) { this.reportValidity(); valid=false; return false; }
+      });
+      // Ride Category validation
+      if(tabId=='#tab-ride' && $('input[name="rideCategory"]:checked').length===0){
+          toastr.error("Please select a Ride Category.");
+          valid=false;
       }
-  });
-
-  // Ride Category -> Payment
-  $('#btn-next-ride').click(function() {
-      if (validateCurrentTab('#tab-ride')) {
-          $('#tab-payment-tab').tab('show');
+      // Payment file validation
+      if(tabId=='#tab-payment' && $('#inp-payment-file').get(0).files.length===0){
+          toastr.error("Please upload Payment Proof.");
+          valid=false;
       }
-  });
-
-  // Payment -> Success
-  $('#btn-next-payment').click(function() {
-      if (validateCurrentTab('#tab-payment')) {
-          $('#tab-success-tab').tab('show');
+      // Birthdate ≥10 years
+      if(tabId=='#tab-basic'){
+          let birth = new Date($('#inp-birthdate').val());
+          let minDate = new Date(); minDate.setFullYear(minDate.getFullYear()-10);
+          if(birth > minDate){
+              toastr.error("Registrant must be at least 10 years old.");
+              valid=false;
+          }
+          // Contact 11 digits
+          let contact = $('#inp-contact').cleanVal();
+          if(contact.length!==11){
+              toastr.error("Contact number must be 11 digits.");
+              valid=false;
+          }
       }
-  });
+      return valid;
+  }
 
-  // Back buttons don’t need validation
-  $('#btn-back-ride').click(function() { $('#tab-basic-tab').tab('show'); });
-  $('#btn-back-payment').click(function() { $('#tab-ride-tab').tab('show'); });
+  // Next buttons
+  $('#btn-next-basic').click(()=>{ if(validateTab('#tab-basic')) showTab('#tab-ride',2); });
+  $('#btn-next-ride').click(()=>{ if(validateTab('#tab-ride')) showTab('#tab-payment',3); });
+  $('#btn-next-payment').click(()=>{ if(validateTab('#tab-payment')) showTab('#tab-success',4); });
 
-  // Optional: validate on form submit
-  $('#frm-registration').on('submit', function(e) {
-    e.preventDefault();
-    
-    let contactNumber = $('#inp-contact').cleanVal(); // get digits only
-    if (contactNumber.length > 0 && contactNumber.length !== 11) {
-        toastr.error("Contact number must be exactly 11 digits.");
-        return;
-    }
-  
-    const runner = {
-          firstName: $('#inp-firstname').val(),
-          lastName: $('#inp-lastname').val(),
-          gender: $('#inp-gender').val(),
-          birthdate: $('#inp-birthdate').val(),
-          batchYear: $('#inp-batchyear').val(),
-          contact: $('#inp-contact').val(),
-          address: $('#inp-address').val(),
-          tshirtSize: $('#inp-tshirt').val()
-      };
-
-      // const btnRegister = $('#btn-register');
-      // btnRegister.prop('disabled', true).text('Registered: Directing to QR Code...');
-      toastr.success("Successfully registered. For payment and activation, please contact your batch officer.");
-
-    
-      // // Wait 4 seconds (4000ms) before executing
-      // setTimeout(function() {
-      //     btnRegister.prop('disabled', false).text('Register');
-      //     window.location.href = "qrcode.html";
-      // }, 10000);
-  });
+  // Back buttons
+  $('#btn-back-ride').click(()=>showTab('#tab-basic',1));
+  $('#btn-back-payment').click(()=>showTab('#tab-ride',2));
 
   function loadBatchYear(){
     const currentYear = 2026;
@@ -100,29 +92,6 @@ $(document).ready(function () {
     $('#inp-contact').mask('0000-000-0000', {
         placeholder: "0912-345-6789"
     });
-  }
-
-  function validateCurrentTab(tabPane) {
-      let isValid = true;
-
-      // Check all visible required inputs/selects
-      $(tabPane).find('input[required], select[required]').each(function() {
-          if (!this.checkValidity()) {
-              this.reportValidity(); // browser tooltip
-              isValid = false;
-              return false; // stop on first invalid
-          }
-      });
-
-      // Special validation for Ride Category tab
-      if (tabPane === '#tab-ride') {
-          if ($('input[name="rideCategory"]:checked').length === 0) {
-              toastr.error("Please select a Ride Category (3km or 6km).");
-              isValid = false;
-          }
-      }
-
-      return isValid;
   }
 
 });
