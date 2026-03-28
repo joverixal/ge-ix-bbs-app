@@ -75,7 +75,7 @@ $(document).ready(function () {
   $('#btn-next-ride').click(()=>{ if(validateTab('#tab-ride')) showTab('#tab-payment',3); });
   $('#btn-next-payment').on('click', function() {
 
-    if(validateTab('##tab-payment')){
+    if(validateTab('#tab-payment')){
       // Populate Review tab
       $('#review-fullname').text($('#inp-firstname').val() + ' ' + $('#inp-lastname').val());
       $('#review-gender').text($('#sel-gender').val());
