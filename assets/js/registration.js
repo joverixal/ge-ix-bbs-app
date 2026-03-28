@@ -18,6 +18,7 @@ $(document).ready(function () {
     let contactNumber = $('#inp-contact').cleanVal(); // get digits only
     if (contactNumber.length > 0 && contactNumber.length !== 11) {
         toastr.error("Contact number must be exactly 11 digits.");
+        return;
     }
   
     const runner = {
