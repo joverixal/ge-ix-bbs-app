@@ -44,7 +44,7 @@ $(document).ready(function () {
         options += `<option value="${year}">${year}</option>`;
     }
 
-    $('#inp-batch-year').html(options);
+    $('#sel-batch-year').html(options);
   }
 
 });
