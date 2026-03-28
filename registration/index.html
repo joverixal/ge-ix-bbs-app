@@ -140,46 +140,47 @@
     color: #7A2BE2;
   }
 
-  /* Hide radio circle */
+  /* Hide radio */
   .pill-option .form-check-input {
     display: none;
   }
   
-  /* Base pill style */
+  /* Base pill (neutral look) */
   .pill-option {
-    border: 1px solid #ddd;
+    border: 1px solid #dcdcdc;
     border-radius: 999px;
     padding: 6px 14px;
     cursor: pointer;
+    background: #f5f6f8;
+    color: #333;
     transition: all 0.2s ease;
-    background: #f8f9fa;
   }
   
-  /* Label spacing fix */
+  /* Label reset */
   .pill-option .form-check-label {
     margin: 0;
     cursor: pointer;
   }
   
-  /* Hover effect */
+  /* Hover */
   .pill-option:hover {
-    border-color: #7A2BE2;
-    background: #f3edff;
+    background: #eef1f5;
+    border-color: #bfc6d1;
   }
   
-  /* SELECTED STATE (strong emphasis) */
-  .pill-option .form-check-input:checked + .form-check-label {
-    font-weight: 600;
-    color: #fff;
-  }
-  
-  /* Highlight selected container */
+  /* Selected state (DIFFERENT from button gradient) */
   .pill-option:has(.form-check-input:checked) {
-    background: linear-gradient(135deg, #7A2BE2, #00B7C2);
-    border-color: transparent;
-    color: #fff;
-    box-shadow: 0 4px 10px rgba(122,43,226,0.3);
+    background: #e6f4ff;               /* light blue */
+    border-color: #0d6efd;             /* Bootstrap primary */
+    color: #0d6efd;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(13,110,253,0.15);
     transform: scale(1.05);
+  }
+  
+  /* Optional stronger text when selected */
+  .pill-option .form-check-input:checked + .form-check-label {
+    color: #0d6efd;
   }
 
   /* Force uppercase display */
