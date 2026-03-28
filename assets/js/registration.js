@@ -11,6 +11,22 @@ $(document).ready(function () {
   maskContactNumber();
   loadBatchYear();
 
+  // Show tab and update step indicator
+  function showTab(tabId, stepNumber) {
+      $('.tab-pane').removeClass('active');
+      $(tabId).addClass('active');
+
+      $('.step-indicator').each(function(i){
+          if(i+1 < stepNumber){
+              $(this).addClass('completed').removeClass('active');
+          } else if(i+1 === stepNumber){
+              $(this).addClass('active').removeClass('completed');
+          } else {
+              $(this).removeClass('active completed');
+          }
+      });
+  }
+
   function validateTab(tabId) {
       let valid = true;
       // Ride Category validation
