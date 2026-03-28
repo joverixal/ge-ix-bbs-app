@@ -83,7 +83,7 @@ $(document).ready(function () {
       $('#review-contact').text($('#inp-contact').val());
       $('#review-batch').text(emptyStateLabel($('#sel-batch-year').val().trim()));
       $('#review-address').text($('#inp-address').val().trim());
-      $('#review-tshirt').text($('#sel-tshirt').val().trim());
+      $('#review-tshirt').text($('#sel-tshirt').val());
       $('#review-category').text($('input[name="rideCategory"]:checked').val());
       $('#review-payment').text($('#inp-payment-file').val() ? 'Uploaded' : 'Not uploaded');
   
