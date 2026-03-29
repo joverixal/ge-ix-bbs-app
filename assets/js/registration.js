@@ -93,32 +93,33 @@ $(document).ready(function () {
   
   $('#btn-next-review').on('click', function() {
     buildSuccessContent();
+    $('body').addClass('success-mode');
 
-    // Hide all tabs and step indicators
-    $('#frm-registration .tab-pane').hide();
+    // Hide entire form and step indicators
+    $('#frm-registration').hide();
     $('.step-indicator').hide();
 
-    // Show only the success content
-    $('#tab-success').show();
+    // Force show success as standalone
+    $('#tab-success')
+        .removeClass('tab-pane') // remove tab behavior
+        .show();
 
-    // Countdown auto-download (3 seconds)
+    // Countdown auto-download
     let countdown = 3;
     const originalText = "Download QR Code";
-    $('#btn-download-qr').prop('disabled', true); // disable manual click during countdown
+    $('#btn-download-qr').prop('disabled', true);
 
     const countdownInterval = setInterval(() => {
         if(countdown <= 0){
             clearInterval(countdownInterval);
-            $('#btn-download-qr').prop('disabled', false).text(originalText); // restore button
-            // Trigger QR download automatically
+            $('#btn-download-qr').prop('disabled', false).text(originalText);
             $('#btn-download-qr').click();
-            toastr.success("QR code downloaded automatically!");
         } else {
             $('#btn-download-qr').text(`${originalText} (${countdown})`);
             countdown--;
         }
     }, 1000);
-  });
+});
 
   function emptyStateLabel(value){
     if(value == '')
