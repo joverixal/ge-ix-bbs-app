@@ -93,7 +93,6 @@ $(document).ready(function () {
   
   $('#btn-next-review').on('click', function() {
     buildSuccessContent();
-    $('body').addClass('success-mode');
 
     // Hide entire form and step indicators
     $('#frm-registration').hide();
