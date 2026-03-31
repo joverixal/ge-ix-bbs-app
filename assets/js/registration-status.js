@@ -35,6 +35,8 @@ $(document).ready(function () {
   // Open modal and start scanner
   $('#btn-scan-qr').click(async function() {
 
+    $('#inp-firstname').val('');
+    $('#inp-lastname').val('');
     $('#status-result').addClass('d-none');
     
     qrModal.show();
