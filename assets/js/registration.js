@@ -110,64 +110,63 @@ $(document).ready(function () {
     const file = fileInput.files[0];
     const reader = new FileReader();
 
-    // start reading the file (triggers onload)
+    reader.onload = function(e) {
+        const base64Data = e.target.result.split(',')[1]; // remove data:*/*;base64,
+    
+        const params = {
+            action: "registration",
+            filename: file.name,
+            mimeType: file.type,
+            data: base64Data
+        };
+    
+        $.ajax({
+            url: API_URL,
+            type: "POST",
+            data: JSON.stringify(params),
+            contentType: "application/json",
+            success: function(response) {
+                if (typeof response === "string") response = JSON.parse(response);
+                console.log("Registration successful", response);
+            },
+            error: function(err) {
+                console.log("Error registration", err);
+                alert("Error registration, please try again later");
+            }
+        });
+    };
+    
+    // **call readAsDataURL after setting onload**
     reader.readAsDataURL(file);
 
-    reader.onload = function(e) {
-      const base64Data = e.target.result.split(',')[1]; // remove data:*/*;base64,
+  // buildSuccessContent();
 
-      const params = {
-        action: "registration",
-        filename: file.name,
-        mimeType: file.type,
-        data: base64Data
-      };
-  
-       $.ajax({
-        url: API_URL,
-        type: "POST",
-        data: JSON.stringify(params),
-        contentType: "application/json", // important for JSON POST
-        success: function (response) {
+  // // Hide entire form UI (tabs + steps)
+  // $('#frm-registration .tab-pane').hide();
+  // $('.step-indicator').hide();
+
+  // // Show success content
+  // $('#success-container').fadeIn();
+
+  // // Countdown auto-download
+  // let countdown = 3;
+  // const originalText = "Download QR Code";
+  // $('#btn-download-qr').prop('disabled', true);
+
+  // const countdownInterval = setInterval(() => {
+  //     if(countdown <= 0){
+  //         clearInterval(countdownInterval);
+  //         $('#btn-download-qr')
+  //             .prop('disabled', false)
+  //             .text(originalText)
+  //             .click();
+  //     } else {
+  //         $('#btn-download-qr').text(`${originalText} (${countdown})`);
+  //         countdown--;
+  //     }
+  // }, 1000);
+
     
-            if (typeof response === "string") {
-                response = JSON.parse(response);
-            }
-          
-        },
-        error: function (err) {
-            console.log("Error registration, please try again later", err);
-            alert("Error registration, please try again later");
-        }
-      });
-    }
-
-  buildSuccessContent();
-
-  // Hide entire form UI (tabs + steps)
-  $('#frm-registration .tab-pane').hide();
-  $('.step-indicator').hide();
-
-  // Show success content
-  $('#success-container').fadeIn();
-
-  // Countdown auto-download
-  let countdown = 3;
-  const originalText = "Download QR Code";
-  $('#btn-download-qr').prop('disabled', true);
-
-  const countdownInterval = setInterval(() => {
-      if(countdown <= 0){
-          clearInterval(countdownInterval);
-          $('#btn-download-qr')
-              .prop('disabled', false)
-              .text(originalText)
-              .click();
-      } else {
-          $('#btn-download-qr').text(`${originalText} (${countdown})`);
-          countdown--;
-      }
-  }, 1000);
 });
 
   $('input[name="rideCategory"]').on('change', function () {
