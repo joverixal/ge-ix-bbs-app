@@ -9,8 +9,8 @@ $(document).ready(function () {
 
   $('#btn-search-name').click(function(){
     const id = '';
-    const firstName = $('#inp-firstname').val().trim();
-    const lastName = $('#inp-lastname').val().trim();
+    const firstName = $('#inp-firstname').val().trim().toUpperCase();
+    const lastName = $('#inp-lastname').val().trim().toUpperCase();
     if(!firstName || !lastName){
         toastr.error("Enter both first and last name");
         return;
