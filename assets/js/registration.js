@@ -31,8 +31,22 @@ $(document).ready(function () {
       let valid = true;
       // Ride Category validation
       if(tabId=='#tab-ride' && $('input[name="rideCategory"]:checked').length===0){
+        const rideCategory = $('input[name="rideCategory"]:checked').val();
+        const tshirt = $('input[name="tshirt"]:checked').val();
+
+        if(!rideCategory){
           toastr.error("Please select a category.");
           valid=false;
+        }else{
+
+          if(rideCategory == '3KM - Package A - 200' || rideCategory == '3KM - Package A - 250' || rideCategory == '6KM - Package A - 300' || rideCategory == '6KM - Package A - 350'){
+          }else{
+            if(!tshirt){
+                toastr.error("Please select a T-Shirt size.");
+                valid=false;
+            }
+          }
+        }
       }
       // Payment file validation
       if(tabId=='#tab-payment' && $('#inp-payment-file').get(0).files.length===0){
@@ -48,18 +62,14 @@ $(document).ready(function () {
         if(valid){
           const contact = $('#inp-contact').cleanVal();
           const gender = $('input[name="gender"]:checked').val();
-          const tshirt = $('input[name="tshirt"]:checked').val();
+          
           if(contact.length!==11){
               toastr.error("Contact number must be 11 digits.");
               valid=false;
           }else if(!gender){
               toastr.error("Please select a gender.");
               valid=false;
-          }
-          else if(!tshirt){
-                toastr.error("Please select a T-Shirt size.");
-                valid=false;
-            }  
+          }            
         }
       }
       return valid;
@@ -120,6 +130,16 @@ $(document).ready(function () {
       }
   }, 1000);
 });
+
+  $('input[name="rideCategory"]').on('change', function () {
+    const selected = $(this).val();
+
+    if(selected.includes('Package A')){
+      $('input[name="tshirt"]').prop('checked', false).prop('disabled', true);
+    }else{
+      $('input[name="tshirt"]').prop('disabled', true);
+    }
+  });
 
   function emptyStateLabel(value){
     if(value == '')
