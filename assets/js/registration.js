@@ -81,13 +81,15 @@ $(document).ready(function () {
 
     if(validateTab('#tab-payment')){
       // Populate Review tab
+      const tshirtSize = $('input[name="tshirt"]:checked').val() || '';
+      
       $('#review-fullname').text($('#inp-firstname').val().trim().toUpperCase() + ' ' + $('#inp-lastname').val().trim().toUpperCase());
       $('#review-gender').text($('input[name="gender"]:checked').val());
       $('#review-birthdate').text($('#inp-birthdate').val());
       $('#review-contact').text($('#inp-contact').val());
       $('#review-batch').text(emptyStateLabel($('#sel-batch-year').val().trim()));
       $('#review-address').text($('#inp-address').val().trim().toUpperCase());
-      $('#review-tshirt').text($('input[name="tshirt"]:checked').val());
+      $('#review-tshirt').text(tshirtSize);
       $('#review-category').text($('input[name="rideCategory"]:checked').val());
       $('#review-payment').text($('#inp-payment-file').val() ? 'Uploaded' : 'Not uploaded');
   
@@ -101,61 +103,57 @@ $(document).ready(function () {
   $('#btn-back-review').on('click', function() {showTab('#tab-payment', 3);});
   
  $('#btn-next-review').on('click', function() {
-    // sample();
      registration();
   });
 
-  function sample(){
-    $.ajax({
-            url: API_URL,
-            method: "GET",
-            data: {
-                action: "sample",
-                name: "Joverixal",
-            },
-            success: function (response) {
+  function registration(){
+    const firstName = $('#inp-firstname').val().trim().toUpperCase();
+    const lastName = $('#inp-lastname').val().trim().toUpperCase();
+    const gender = $('input[name="gender"]:checked').val();
+    const birthdate = $('#inp-birthdate').val();
+    const contactNumber = $('#inp-contact').cleanVal();
+    const batchYear = $('#sel-batch-year').val();
+    const address = $('#inp-address').val().trim().toUpperCase();
 
-                if (typeof response === "string") {
-                    response = JSON.parse(response);
-                }
+    const package = $('input[name="rideCategory"]:checked').val();
+    const amount = $('input[name="rideCategory"]:checked').attr('amount');
+    const tshirtSize = $('input[name="tshirt"]:checked').val() || '';
+    
+    const fileInput = $('#inp-payment-file')[0];
+    const file = fileInput.files[0];
+  
+    compressImage(file, 800, 0.7, function (base64Data) {
+        // 🔥 send compressed image
+
+        const data = {
+          action: "registration",
+          firstName,
+          lastName,
+          gender,
+          birthdate,
+          contactNumber,
+          batchYear,
+          address,
+          package,
+          amount,
+          tshirtSize,
+          imageData: base64Data
+        };
+      
+        $.ajax({
+            url: API_URL,
+            method: "POST",
+            data: data,
+            success: function (res) {
+                console.log(res);
+                alert("Uploaded!");
             },
             error: function (err) {
-                console.log("Error", err);
+                console.error(err);
+                alert("Upload failed!");
             }
         });
-  }
-
-  function registration(){
-   const fileInput = $('#inp-payment-file')[0];
-   const amountDue = '100';
-  
-      if (fileInput.files.length === 0) {
-          alert('Please select a file.');
-          return;
-      }
-  
-      const file = fileInput.files[0];
-  
-      compressImage(file, 800, 0.7, function (base64Data) {
-          // 🔥 send compressed image
-          $.ajax({
-              url: API_URL,
-              method: "POST",
-              data: {
-                  action: "registration",
-                  imageData: base64Data,
-                  amountDue: amountDue
-              },
-              success: function (res) {
-                  console.log(res);
-                  alert("Uploaded!");
-              },
-              error: function (err) {
-                  console.error(err);
-                  alert("Upload failed!");
-              }
-          });
-      });
+    });
   }
 
   function compressImage(file, maxWidth, quality, callback) {
