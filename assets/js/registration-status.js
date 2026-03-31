@@ -7,41 +7,34 @@ $(document).ready(function () {
       "preventDuplicates": true
   };
 
-let html5QrScanner;
-
   // Open modal and start scanner
   $('#btn-scan-qr').click(function() {
     const qrModal = new bootstrap.Modal($('#qrModal')[0]);
     qrModal.show();
 
-    if (!html5QrScanner) {
-      html5QrScanner = new Html5Qrcode("reader");
-
-      const qrConfig = { fps: 10, qrbox: 250 };
-
-      html5QrScanner.start(
-        { facingMode: "environment" },
-        qrConfig,
-        function(qrCodeMessage) {
-          // QR code detected
-          searchQRCode(qrCodeMessage.id);
+    // Initialize QR code scanner
+    function onScanSuccess(decodedText, decodedResult) {
+        try {
+            // Assume QR code contains JSON string of registration data
+            const data = JSON.parse(decodedText);
+    
+            searchQRCode(data.id);
           
-        },
-        function(errorMessage) {
-          // optional scan errors
-          console.log(errorMessage);
+        } catch(err) {
+            toastr.error("Invalid QR Code!");
         }
-      ).catch(err => console.error("Unable to start QR scanner:", err));
     }
+    
+    // Start scanner
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", { fps: 10, qrbox: 250 }
+    );
+    html5QrcodeScanner.render(onScanSuccess);
+
   });
 
   // Stop scanner when modal closes
   $('#qrModal').on('hidden.bs.modal', function() {
-    if (html5QrScanner) {
-      html5QrScanner.stop().then(() => {
-        html5QrScanner.clear();
-        html5QrScanner = null;
-      }).catch(err => console.log(err));
     }
   });
 
