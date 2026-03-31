@@ -8,7 +8,11 @@ $(document).ready(function () {
   };
 
   let html5QrScanner = null;
+  const $qrLoading = $('#qr-loading');
   let qrModal = new bootstrap.Modal($('#qrModal')[0]);
+
+  function showLoading() { $qrLoading.show(); }
+  function hideLoading() { $qrLoading.hide(); }
   
   // Open modal and start scanner
   $('#btn-scan-qr').click(function() {
@@ -32,11 +36,9 @@ $(document).ready(function () {
               // Stop scanner immediately to avoid multiple scans
               html5QrScanner.clear().then(() => {
                   html5QrScanner = null;
-                  qrModal.hide();
                   searchQRCode(data.id);
               }).catch(err => {
                   console.error("Failed to stop QR scanner:", err);
-                  searchQRCode(data.id); // still proceed
               });
   
           } catch (err) {
@@ -59,11 +61,13 @@ $(document).ready(function () {
   // AJAX search function
   function searchQRCode(id) {
  
-      const firstName = $('#inp-firstname').val();
-      const lastName = $('#inp-lastname').val();
-      const params = { action: "registrationStatus", id, firstName, lastName };
-  
-      $.ajax({
+    const firstName = $('#inp-firstname').val();
+    const lastName = $('#inp-lastname').val();
+    const params = { action: "registrationStatus", id, firstName, lastName };
+
+    showLoading();
+    
+    $.ajax({
           url: API_URL,
           method: "GET",
           data: params,
@@ -71,13 +75,17 @@ $(document).ready(function () {
               if (typeof response === "string") response = JSON.parse(response);
   
               if (response.success) {
+                  hideLoading();
+                  qrModal.hide();
                   showRegistrationResult(response.runerData);
               } else {
+                  hideLoading();
                   toastr.error(response.message || "Record not found");
               }
   
           },
           error: function() {
+              hideLoading();
               toastr.error("Network error, please try again later");
           }
       });
