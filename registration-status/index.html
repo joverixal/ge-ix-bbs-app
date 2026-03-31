@@ -89,41 +89,36 @@ body { background: linear-gradient(135deg, #7A2BE2, #00B7C2); min-height: 100vh;
     <!-- Registration Details Result -->
     <div id="status-result" style="display:none;">
       <h5>Registration Details</h5>
+    
       <div class="row g-3">
-
+    
         <!-- Left Column: Basic Info -->
-        <div class="col-6">
+        <div class="col-md-6">
           <div class="p-3 border rounded-3 h-100">
-            <h6 class="fw-bold text-primary mb-2">Basic Information</h6>
+            <h6 class="fw-bold text-primary mb-3">Basic Information</h6>
+    
             <p class="mb-1"><strong>Full Name:</strong><br><span id="result-fullname"></span></p>
             <p class="mb-1"><strong>Gender:</strong><br><span id="result-gender"></span></p>
             <p class="mb-1"><strong>Batch Year:</strong><br><span id="result-batch"></span></p>
+            <hr>
+    
+            <p class="mb-1"><strong>Run Category:</strong><br><span id="result-category"></span></p>
+            <p class="mb-1"><strong>T-Shirt Size:</strong><br><span id="result-tshirt"></span></p>
+            <p class="mb-1"><strong>Payment Status:</strong><br><span id="result-payment"></span></p>
           </div>
         </div>
-
-        <!-- Right Column: Run Category, T-Shirt, Payment, QR -->
-        <div class="col-6">
-          <div class="p-3 border rounded-3 mb-3">
-            <h6 class="fw-bold text-primary mb-2">Run Category</h6>
-            <p class="mb-0"><strong>Selected:</strong><br><span id="result-category"></span></p>
-          </div>
-          <div class="p-3 border rounded-3 mb-3">
-            <h6 class="fw-bold text-primary mb-2">T-Shirt</h6>
-            <p class="mb-0"><strong>Size:</strong><br><span id="result-tshirt"></span></p>
-          </div>
-          <div class="p-3 border rounded-3 mb-3">
-            <h6 class="fw-bold text-primary mb-2">Payment</h6>
-            <p class="mb-0"><strong>Status:</strong><br><span id="result-payment"></span></p>
-          </div>
-          <div class="p-3 border rounded-3 text-center">
+    
+        <!-- Right Column: QR Code -->
+        <div class="col-md-6">
+          <div class="p-3 border rounded-3 text-center h-100 d-flex flex-column justify-content-center align-items-center">
             <h6 class="fw-bold text-primary mb-2">QR Code</h6>
-            <div id="result-qr" class="my-3 mx-auto"></div>
+            <div id="result-qr" class="my-3"></div>
             <button id="btn-download-qr" type="button" class="btn register-btn mt-2">
               Download QR Code
             </button>
           </div>
         </div>
-
+    
       </div>
     </div>
 
