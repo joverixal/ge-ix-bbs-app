@@ -87,7 +87,7 @@ $(document).ready(function () {
     $("#result-qr").empty();
 
     const fullName = `${data.firstName} ${data.lastName}`;
-    const eventTitle = "2026 ANHS Grand Alumni Fun Run";
+    const eventTitle = "2026 ANHS Fun Run";
     const currentDateTime = getCurrentDateTime();
     const fileName = `${data.firstName}_${currentDateTime}`;
     
