@@ -34,6 +34,9 @@ $(document).ready(function () {
   
   // Open modal and start scanner
   $('#btn-scan-qr').click(async function() {
+
+    $('#status-result').addClass('d-none');
+    
     qrModal.show();
   
     showLoading();
@@ -131,6 +134,8 @@ $(document).ready(function () {
         toastr.error("Enter both first and last name");
         return;
     }
+
+    $('#status-result').addClass('d-none');
     search(id, firstName, lastName);
     
   });  
@@ -188,7 +193,8 @@ $(document).ready(function () {
   }
 
   function showRegistrationResult(data) {
-    $('#status-result').show();
+    $('#status-result').removeClass('d-none');
+    
     $('#result-fullname').text(data.firstName + ' ' + data.lastName);
     $('#result-gender').text(data.gender);
     $('#result-batch').text(data.batchYear);
