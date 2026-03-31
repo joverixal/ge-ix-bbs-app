@@ -37,9 +37,6 @@ html5QrcodeScanner.render(onScanSuccess);
   });
 
   function search(id, firstName, lastName){
-
-    
-    
     const btnScanQR = $('#btn-scan-qr');
     const btnSearchName = $('#btn-search-name');
     btnScanQR.prop('disabled', true);
