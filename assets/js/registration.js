@@ -139,7 +139,7 @@ $(document).ready(function () {
       compressImage(file, 800, 0.7, function (base64Data) {
           // 🔥 send compressed image
           $.ajax({
-              url: "https://script.google.com/macros/s/AKfycbxKnbAauKIZKRjN54q8H8aBx4XlgitQOsEYTYOpxIvUJaK_-IxSEcTD6b8dXxtdSsqX/exec",
+              url: API_URL,
               method: "POST",
               data: {
                   action: "registration",
