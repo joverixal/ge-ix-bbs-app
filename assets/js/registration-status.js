@@ -104,23 +104,12 @@ $(document).ready(function () {
           showRegistrationResult(response.runerData);
         } else {
           toastr.error(response.message || "Record not found");
-  
-          // 🔁 Restart scanner after fail
-          await stopScanner();
-          
-          hideLoading();
+          qrModal.hide();
         }
       },
       error: async function() {
         toastr.error("Network error, please try again later");
-  
-        // 🔁 Restart scanner
-        await stopScanner();
-  
-        html5QrScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 }, false);
-        html5QrScanner.render(onScanSuccess);
-  
-        hideLoading();
+        qrModal.hide();
       }
     });
   }
