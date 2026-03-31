@@ -53,12 +53,7 @@ body { background: linear-gradient(135deg, #7A2BE2, #00B7C2); min-height: 100vh;
     <h3 class="register-title">Check Registration Status</h3>
   </div>
 
-  <form id="frm-status">
-
-    <!-- Scan QR Button -->
-    <div class="mb-4 text-center">
-      <button type="button" class="btn register-btn" id="btn-scan-qr">Scan Your QR Code</button>
-    </div>
+  <form id="frm-status">   
     
     <!-- QR Scanner Modal -->
     <div class="modal fade" id="qrModal" tabindex="-1" aria-hidden="true">
@@ -86,10 +81,8 @@ body { background: linear-gradient(135deg, #7A2BE2, #00B7C2); min-height: 100vh;
     </div>
 
     <hr>
-
     <!-- Search by Name -->
     <div class="mb-4">
-      <h5>Or Search by Name</h5>
       <div class="row g-3">
         <div class="col-6">
           <div class="form-floating">
@@ -105,6 +98,7 @@ body { background: linear-gradient(135deg, #7A2BE2, #00B7C2); min-height: 100vh;
         </div>
       </div>
       <div class="mt-3 text-end">
+        <button type="button" class="btn register-btn" id="btn-scan-qr">Scan Your QR Code</button>
         <button type="button" class="btn register-btn" id="btn-search-name">Search</button>
       </div>
     </div>
@@ -116,29 +110,30 @@ body { background: linear-gradient(135deg, #7A2BE2, #00B7C2); min-height: 100vh;
       <div class="row g-3">
     
         <!-- Left Column: Basic Info -->
-        <div class="col-6">
-          <div class="p-3 border rounded-3 h-100">
+        <div class="col-12">
+          <div class="p-3 border rounded-3">
             <h6 class="fw-bold text-primary mb-3">Basic Information</h6>
     
-            <p class="mb-1"><strong>Full Name:</strong><br><span id="result-fullname"></span></p>
-            <p class="mb-1"><strong>Gender:</strong><br><span id="result-gender"></span></p>
-            <p class="mb-1"><strong>Batch Year:</strong><br><span id="result-batch"></span></p>
-            <hr>
-    
-            <p class="mb-1"><strong>Run Category:</strong><br><span id="result-category"></span></p>
-            <p class="mb-1"><strong>T-Shirt Size:</strong><br><span id="result-tshirt"></span></p>
-            <p class="mb-1"><strong>Payment Status:</strong><br><span id="result-payment"></span></p>
+            <div class="row">
+              <div class="col-6">
+                <p class="mb-1"><strong>Full Name:</strong><br><span id="result-fullname"></span></p>
+                <p class="mb-1"><strong>Gender:</strong><br><span id="result-gender"></span></p>
+                <p class="mb-1"><strong>Batch Year:</strong><br><span id="result-batch"></span></p>
+              </div>
+              <div class="col-6">
+                <p class="mb-1"><strong>Run Category:</strong><br><span id="result-category"></span></p>
+                <p class="mb-1"><strong>T-Shirt Size:</strong><br><span id="result-tshirt"></span></p>
+                <p class="mb-1"><strong>Payment Status:</strong><br><span id="result-payment"></span></p>
+              </div>
+            </div>
           </div>
         </div>
     
-        <!-- Right Column: QR Code Only -->
-        <div class="col-6">
-          <div class="p-3 border rounded-3 h-100 d-flex flex-column justify-content-center align-items-center">
-            <div id="result-qr" class="my-3"></div>
-            <button id="btn-download-qr" type="button" class="btn register-btn mt-2">
-              Download QR Code
-            </button>
-          </div>
+        <!-- Download Button Only -->
+        <div class="col-12 text-center mt-3">
+          <button id="btn-download-qr" type="button" class="btn register-btn">
+            Download QR Code
+          </button>
         </div>
     
       </div>
