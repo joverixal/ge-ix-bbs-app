@@ -127,7 +127,7 @@ $(document).ready(function () {
 
   function registration(){
   const fileInput = $('#inp-payment-file')[0];
-    const amountDue = '100');
+    const amountDue = '100';
 
     if (fileInput.files.length === 0) {
         toastr.error('Please select a file.');
