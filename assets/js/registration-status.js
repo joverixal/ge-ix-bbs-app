@@ -75,7 +75,7 @@ $(document).ready(function () {
     // Clear previous QR
     $("#result-qr").empty();
 
-    const fullName = `${firstName} ${lastName}`;
+    const fullName = `${data.firstName} ${data..lastName}`;
     const eventTitle = "2026 ANHS Grand Alumni Fun Run";
     const currentDateTime = getCurrentDateTime();
     const fileName = `${firstName}_${currentDateTime}`;
