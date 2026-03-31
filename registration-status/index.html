@@ -9,9 +9,7 @@
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="../assets/vendor/bootstrap.min.css">
-<!-- Bootstrap Icons -->
 <link rel="stylesheet" href="../assets/vendor/bootstrap-icons.css">
-<!-- Toastr CSS -->
 <link rel="stylesheet" href="../assets/vendor/toastr.min.css">
 <link rel="stylesheet" href="../assets/css/footer.css">
 
@@ -26,65 +24,24 @@
 <script src="../assets/js/registration-status.js"></script>
 
 <style>
-  body {
-    background: linear-gradient(135deg, #7A2BE2, #00B7C2);
-    min-height: 100vh;
-  }
+body { background: linear-gradient(135deg, #7A2BE2, #00B7C2); min-height: 100vh; }
+.container { background: #ffffff; border-radius: 1rem; padding: 2rem; max-width: 700px; }
 
-  .container {
-    background: #ffffff;
-    border-radius: 1rem;
-    padding: 2rem;
-    max-width: 700px;
-  }
+.register-header { display:flex; align-items:center; gap:12px; margin-bottom:20px; }
+.register-logo { width:60px; height:auto; }
+.register-title { font-size:1.2rem; color:#5A1FAF; font-weight:600; margin:0; }
 
-  .register-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
+.register-btn { background: linear-gradient(135deg, #7A2BE2, #00B7C2) !important; color:#fff !important; border:none; }
+.register-btn:hover { opacity:0.9; }
 
-  .register-logo {
-    width: 60px;
-    height: auto;
-  }
+.form-floating input { height:50px; font-size:1rem; }
+.form-control:focus { border-color:#00B7C2; box-shadow:0 0 0 0.2rem rgba(0,183,194,0.25); }
 
-  .register-title {
-    font-size: 1.2rem;
-    color: #5A1FAF;
-    font-weight: 600;
-    margin: 0;
-  }
-
-  .form-floating input { height:50px; font-size:1rem; }
-  .form-control:focus {
-    border-color: #00B7C2;
-    box-shadow: 0 0 0 0.2rem rgba(0,183,194,0.25);
-  }
-
-  .register-btn {
-    background: linear-gradient(135deg, #7A2BE2, #00B7C2) !important;
-    color: #fff !important;
-    border: none;
-  }
-  .register-btn:hover { opacity: 0.9; }
-
-  #qrcode {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-  }
-  #qrcode canvas {
-    display: block;
-    max-width: 100%;
-    height: auto;
-  }
+#qrcode { display:flex; justify-content:center; align-items:center; margin:20px auto; }
+#qrcode canvas { display:block; max-width:100%; height:auto; }
 
 </style>
 </head>
-
 <body>
 
 <div class="container py-4">
@@ -129,14 +86,45 @@
       </div>
     </div>
 
-    <!-- Result -->
-    <div id="status-result" class="mt-4" style="display:none;">
+    <!-- Registration Details Result -->
+    <div id="status-result" style="display:none;">
       <h5>Registration Details</h5>
-      <p><strong>Full Name:</strong> <span id="result-fullname"></span></p>
-      <p><strong>Run Category:</strong> <span id="result-category"></span></p>
-      <p><strong>T-Shirt Size:</strong> <span id="result-tshirt"></span></p>
-      <p><strong>Payment Status:</strong> <span id="result-payment"></span></p>
-      <div id="result-qr" class="mt-3"></div>
+      <div class="row g-3">
+
+        <!-- Left Column: Basic Info -->
+        <div class="col-6">
+          <div class="p-3 border rounded-3 h-100">
+            <h6 class="fw-bold text-primary mb-2">Basic Information</h6>
+            <p class="mb-1"><strong>Full Name:</strong><br><span id="result-fullname"></span></p>
+            <p class="mb-1"><strong>Gender:</strong><br><span id="result-gender"></span></p>
+            <p class="mb-1"><strong>Birthdate:</strong><br><span id="result-birthdate"></span></p>
+            <p class="mb-1"><strong>Contact:</strong><br><span id="result-contact"></span></p>
+            <p class="mb-1"><strong>Batch Year:</strong><br><span id="result-batch"></span></p>
+            <p class="mb-0"><strong>Address:</strong><br><span id="result-address"></span></p>
+          </div>
+        </div>
+
+        <!-- Right Column: Run Category, T-Shirt, Payment, QR -->
+        <div class="col-6">
+          <div class="p-3 border rounded-3 mb-3">
+            <h6 class="fw-bold text-primary mb-2">Run Category</h6>
+            <p class="mb-0"><strong>Selected:</strong><br><span id="result-category"></span></p>
+          </div>
+          <div class="p-3 border rounded-3 mb-3">
+            <h6 class="fw-bold text-primary mb-2">T-Shirt</h6>
+            <p class="mb-0"><strong>Size:</strong><br><span id="result-tshirt"></span></p>
+          </div>
+          <div class="p-3 border rounded-3 mb-3">
+            <h6 class="fw-bold text-primary mb-2">Payment</h6>
+            <p class="mb-0"><strong>Status:</strong><br><span id="result-payment"></span></p>
+          </div>
+          <div class="p-3 border rounded-3 text-center">
+            <h6 class="fw-bold text-primary mb-2">QR Code</h6>
+            <div id="result-qr"></div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </form>
@@ -145,6 +133,5 @@
 
 <div id="footer-placeholder"></div>
 <script src="../assets/js/loadFooter.js"></script>
-
 </body>
 </html>
