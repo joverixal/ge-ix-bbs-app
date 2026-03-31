@@ -145,8 +145,7 @@ $(document).ready(function () {
             method: "POST",
             data: data,
             success: function (res) {
-              const data = res.data;
-              const id = data.id
+              const id = res.id
               
               buildSuccessContent(id, firstName, lastName);
 
