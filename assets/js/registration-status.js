@@ -71,9 +71,75 @@ $(document).ready(function () {
     $('#result-category').text(data.package);
     $('#result-tshirt').text(data.tshirtSize);
     $('#result-payment').text(data.status);
-    // QR Code
-    $('#result-qr').empty();
-    kjua({ text: data.id, size: 150, fill: '#7A2BE2' }).appendTo('#result-qr');
+    
+    // Clear previous QR
+    $("#result-qr").empty();
+
+    const fullName = `${firstName} ${lastName}`;
+    const eventTitle = "2026 ANHS Grand Alumni Fun Run";
+    const currentDateTime = getCurrentDateTime();
+    const fileName = `${firstName}_${currentDateTime}`;
+    
+    const qrSize = 200;
+    const margin = 5;
+    const textSpace = 50;
+    const canvasWidth = qrSize + margin * 2;
+    const canvasHeight = qrSize + textSpace + margin * 2;
+
+    // Create main canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+    const ctx = canvas.getContext('2d');
+
+    // White background
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Generate QR using kjua directly on a canvas
+    const qr = kjua({
+        render: 'canvas',
+        crisp: true,
+        size: qrSize,
+        fill: '#000000',
+        back: '#ffffff',
+        quiet: 0,
+        text: JSON.stringify({ data.id, data.firstName, data.lastName})
+    });
+
+    // Draw QR on our main canvas
+    ctx.drawImage(qr, margin, margin, qrSize, qrSize);
+
+    // Draw text
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#000000";
+    ctx.font = "bold 16px Arial";
+    ctx.fillText(eventTitle, canvasWidth / 2, qrSize + margin + 20);
+    ctx.font = "14px Arial";
+    ctx.fillText(fullName, canvasWidth / 2, qrSize + margin + 40);
+
+    // Add canvas to DOM
+    $("#qrcode").append(canvas);
+    $("#qrcode canvas").css({ display: "block", margin: "0 auto" });
+
+    // Download button
+    $("#btn-download-qr").off("click").on("click", function(e) {
+        e.preventDefault();
+        const link = document.createElement('a');
+        link.href = canvas.toDataURL("image/png");
+        link.download = `ANHS_RUN_QR_${fileName}.png`;
+        link.click();
+    });
+  }
+
+  function getCurrentDateTime() {
+      const now = new Date();
+      return now.getFullYear() +
+             String(now.getMonth() + 1).padStart(2, '0') +
+             String(now.getDate()).padStart(2, '0') + "_" +
+             String(now.getHours()).padStart(2, '0') +
+             String(now.getMinutes()).padStart(2, '0') +
+             String(now.getSeconds()).padStart(2, '0');
   }
 
 });
