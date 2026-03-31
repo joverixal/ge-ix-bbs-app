@@ -127,10 +127,10 @@ $(document).ready(function () {
 
   function registration(){
   const fileInput = $('#inp-payment-file')[0];
-    const amountDue = '1000';
+    const amountDue = '100';
 
     if (fileInput.files.length === 0) {
-        toastr.error('Please select a file.');
+        alert('Please select a file.');
         return;
     }
 
@@ -146,21 +146,21 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: "https://script.google.com/macros/s/AKfycbztp3HPAM3kuIjuEjpYvl2Jq_nSBZmEwnaQaic9zcXx1_y9Qv_IC2rezelNr0LEMpBZ/exec",
+            url: "https://script.google.com/macros/s/AKfycbwcwGFbgnN2kLoonTC6qkPgwJI4oj_i2rtLnao-17iFf_EptBY3fvbtWWcDOzwQgkhc/exec",
             method: "POST",
             data: JSON.stringify(payload),
             contentType: "application/json",
             success: function(response) {
                 console.log(response);
                 if (response.success) {
-                    toastr.success("Registered successfully! ID: " + response.id);
+                    alert("Registered successfully! ID: " + response.id);
                 } else {
-                    toastr.error(response.message);
+                    alert(response.message);
                 }
             },
             error: function(err) {
                 console.error(err);
-                toastr.error("Upload failed!");
+                alert("Upload failed!");
             }
         });
     };
