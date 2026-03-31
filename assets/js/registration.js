@@ -110,36 +110,36 @@ $(document).ready(function () {
     const file = fileInput.files[0];
     const reader = new FileReader();
 
+    // start reading the file (triggers onload)
+    reader.readAsDataURL(file);
+
     reader.onload = function(e) {
       const base64Data = e.target.result.split(',')[1]; // remove data:*/*;base64,
-    }
 
-    const params = {
-      action: "registration",
-      filename: file.name,
-      mimeType: file.type,
-      data: base64Data
-    };
-
-     $.ajax({
-      url: API_URL,
-      type: "POST",
-      data: JSON.stringify(params),
-      success: function (response) {
+      const params = {
+        action: "registration",
+        filename: file.name,
+        mimeType: file.type,
+        data: base64Data
+      };
   
-          if (typeof response === "string") {
-              response = JSON.parse(response);
-          }
-        
-      },
-      error: function (err) {
-          console.log("Error registration, please try again later", err);
-          alert("Error registration, please try again later");
-      }
-  });
-
-  // start reading the file (triggers onload)
-  reader.readAsDataURL(file);
+       $.ajax({
+        url: API_URL,
+        type: "POST",
+        data: JSON.stringify(params),
+        success: function (response) {
+    
+            if (typeof response === "string") {
+                response = JSON.parse(response);
+            }
+          
+        },
+        error: function (err) {
+            console.log("Error registration, please try again later", err);
+            alert("Error registration, please try again later");
+        }
+      });
+    }
 
   buildSuccessContent();
 
