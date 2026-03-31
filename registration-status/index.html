@@ -56,28 +56,37 @@ body { background: linear-gradient(135deg, #7A2BE2, #00B7C2); min-height: 100vh;
   <form id="frm-status">   
     <!-- QR Scanner Modal -->
     <div class="modal fade" id="qrModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Scan QR Code</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body position-relative">
-            <!-- Loading overlay -->
-            <div id="qr-loading" class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-white" style="z-index: 10;">
-              <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-              </div>
-            </div>
-            <!-- QR Reader -->
-            <div id="reader" style="width:100%;"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn register-btn" data-bs-dismiss="modal">Close</button>
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content position-relative">
+  
+        <!-- GLOBAL LOADING OVERLAY -->
+        <div id="qr-loading"
+             class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-white"
+             style="z-index: 1055; display:none;">
+          <div class="text-center">
+            <div class="spinner-border text-primary mb-2" role="status"></div>
+            <div>Initializing camera...</div>
           </div>
         </div>
+  
+        <div class="modal-header">
+          <h5 class="modal-title">Scan QR Code</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <div class="modal-body">
+          <!-- QR Reader -->
+          <div id="reader" style="width:100%;"></div>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn register-btn" data-bs-dismiss="modal">Close</button>
+        </div>
+  
       </div>
     </div>
+  </div>
+    
     <!-- Search by Name -->
     <div class="mb-4">
       <div class="row g-3">
