@@ -117,8 +117,8 @@ $(document).ready(function () {
     formData.append('file', file);
 
     // Optional: any other data
-    formData.append('userId', $('#inp-user-id').val());
-    formData.append('amount', $('#inp-amount').val());
+    formData.append('userId', '1234');
+    formData.append('amount', '1000');
 
     $.ajax({
         url: API_URL,
