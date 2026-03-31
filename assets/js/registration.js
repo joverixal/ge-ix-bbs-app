@@ -140,6 +140,21 @@ $(document).ready(function () {
     }
   });
 
+  $('#inp-payment-file').on('change', function() {
+    const file = this.files[0];
+
+    if (file) {
+        const fileType = file.type;
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+        if (!validImageTypes.includes(fileType)) {
+            alert('Only JPG, JPEG, or PNG images are allowed.');
+            toastr.error("Only JPG, JPEG, or PNG images are allowed.");
+            $(this).val(''); // Clear the input
+        }
+    }
+  });
+
   function emptyStateLabel(value){
     if(value == '')
       return '--'
