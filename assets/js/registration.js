@@ -81,7 +81,7 @@ $(document).ready(function () {
 
     if(validateTab('#tab-payment')){
       // Populate Review tab
-      const tshirtSize = $('input[name="tshirt"]:checked').val() || '';
+      const tshirtSize = $('input[name="tshirt"]:checked').val() || '--';
       
       $('#review-fullname').text($('#inp-firstname').val().trim().toUpperCase() + ' ' + $('#inp-lastname').val().trim().toUpperCase());
       $('#review-gender').text($('input[name="gender"]:checked').val());
