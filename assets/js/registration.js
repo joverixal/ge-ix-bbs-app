@@ -7,6 +7,21 @@ $(document).ready(function () {
       "preventDuplicates": true
   };
 
+  const submitBtn = $("#btn-next-review");
+  const privacyChk = $("#chk-privacy");
+
+  // Initially disabled
+  submitBtn.prop("disabled", true);
+
+  // Enable button when checked
+  privacyChk.on("change", function() {
+    if ($(this).is(":checked")) {
+      submitBtn.prop("disabled", false);
+    } else {
+      submitBtn.prop("disabled", true);
+    }
+  });
+
   limitBirthdate();
   maskContactNumber();
   loadBatchYear();
