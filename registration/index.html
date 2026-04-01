@@ -164,43 +164,22 @@
     color: #1877f2;
   }
 
- .review-actions {
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .review-privacy-submit {
-    display: flex;
-    flex-direction: column; /* checkbox above submit button */
-    align-items: flex-end;  /* right-align everything */
-  }
-  
-  .review-privacy a {
-    white-space: nowrap;
-  }
-  
-  /* Small screens */
-  @media (max-width: 480px) {
-    .review-actions {
-      flex-wrap: wrap;
-      gap: 8px 0;
-    }
-  
-    .review-privacy-submit {
-      width: 100%; /* take full width */
-      align-items: flex-end; /* keep checkbox + button right-aligned */
-    }
-  
-    #btn-back-review {
-      flex-basis: 48%;
-    }
-  
-    #btn-next-review {
-      flex-basis: 48%;
-    }
-  }
+ /* Optional: make checkbox text wrap nicely if too long */
+.review-actions .form-check-label a {
+  white-space: nowrap;
+}
 
+@media (max-width: 480px) {
+  /* Checkbox still top-right on small screens */
+  .review-actions .d-flex.justify-content-end {
+    justify-content: flex-end;
+  }
+  
+  /* Make back and submit buttons full width if needed */
+  .review-actions .d-flex.justify-content-between button {
+    flex: 0 0 48%;
+  }
+}
 </style>
 </head>
 
@@ -422,18 +401,22 @@
           </div>
         </div>
       </div>
-        <div class="mt-4 d-flex flex-wrap align-items-center review-actions">
-        <button type="button" class="btn btn-secondary flex-shrink-0" id="btn-back-review">Back</button>
-      
-        <div class="d-flex flex-column ms-auto align-items-end review-privacy-submit">
-          <div class="form-check mb-2 review-privacy">
+        <div class="mt-4 review-actions">
+        <!-- Row 0: checkbox top-right -->
+        <div class="d-flex justify-content-end mb-2">
+          <div class="form-check mb-0">
             <input type="checkbox" class="form-check-input me-2" id="chk-privacy-agree">
             <label class="form-check-label mb-0" for="chk-privacy-agree">
               I have read and agree to the 
               <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
             </label>
           </div>
-          <button type="button" class="btn register-btn flex-shrink-0" id="btn-next-review" disabled>Confirm & Submit</button>
+        </div>
+      
+        <!-- Row 1: Back and Submit -->
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" id="btn-back-review">Back</button>
+          <button type="button" class="btn register-btn" id="btn-next-review" disabled>Confirm & Submit</button>
         </div>
       </div>
     </div>
