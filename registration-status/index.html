@@ -87,40 +87,43 @@ body { background: linear-gradient(135deg, #7A2BE2, #00B7C2); min-height: 100vh;
     </div>
   </div>
     
-    <div class="mb-4 text-center">
-
-    <!-- Scan QR (Top & Centered) -->
-    <button type="button" 
-            class="btn register-btn d-inline-flex align-items-center gap-2 px-4 mb-3" 
-            id="btn-scan-qr">
-      Scan QR
-    </button>
-  
-    <!-- Search by Name -->
-    <div class="row g-3">
-      <div class="col-6">
-        <div class="form-floating">
-          <input type="text" id="inp-firstname" class="form-control" placeholder="First Name">
-          <label for="inp-firstname">First Name</label>
-        </div>
+    <div class="mb-4">
+      <!-- Scan QR (Top & Centered) -->
+      <div class="text-center mb-3">
+        <button type="button" 
+                class="btn register-btn d-inline-flex align-items-center gap-2 px-4" 
+                id="btn-scan-qr">
+          Scan QR
+        </button>
       </div>
-      <div class="col-6">
-        <div class="form-floating">
-          <input type="text" id="inp-lastname" class="form-control" placeholder="Last Name">
-          <label for="inp-lastname">Last Name</label>
+    
+      <!-- Search Row -->
+      <div class="row g-3 align-items-center">
+        
+        <div class="col-md-4 col-12">
+          <div class="form-floating">
+            <input type="text" id="inp-firstname" class="form-control" placeholder="First Name">
+            <label for="inp-firstname">First Name</label>
+          </div>
         </div>
+    
+        <div class="col-md-4 col-12">
+          <div class="form-floating">
+            <input type="text" id="inp-lastname" class="form-control" placeholder="Last Name">
+            <label for="inp-lastname">Last Name</label>
+          </div>
+        </div>
+    
+        <!-- Search Button (same row) -->
+        <div class="col-md-4 col-12 d-grid">
+          <button type="button" 
+                  class="btn btn-outline-secondary h-100" 
+                  id="btn-search-name">
+            Search
+          </button>
+        </div>
+    
       </div>
-    </div>
-  
-    <!-- Search button -->
-    <div class="mt-3 text-center">
-      <button type="button" 
-              class="btn btn-outline-secondary d-inline-flex align-items-center gap-2 px-4" 
-              id="btn-search-name">
-        Search
-      </button>
-    </div>
-  
   </div>
 
     <!-- Registration Details Result -->
