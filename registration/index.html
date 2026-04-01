@@ -165,33 +165,39 @@
   }
 
  .review-actions {
-    flex-wrap: nowrap; /* keep same row if possible */
+    flex-wrap: nowrap;
     align-items: center;
     gap: 10px;
   }
   
-  .review-privacy {
+  .review-privacy-submit {
     display: flex;
-    align-items: center;
-    white-space: nowrap;
+    flex-direction: column; /* checkbox above submit button */
+    align-items: flex-end;  /* right-align everything */
   }
   
   .review-privacy a {
     white-space: nowrap;
   }
   
+  /* Small screens */
   @media (max-width: 480px) {
     .review-actions {
-      flex-wrap: wrap;   /* grow height on small screens */
-      gap: 8px 0;        /* vertical spacing */
+      flex-wrap: wrap;
+      gap: 8px 0;
     }
-    .review-privacy {
-      flex-basis: 100%;  /* checkbox takes full width below buttons */
-      justify-content: flex-end; /* align text right */
-      margin-top: 5px;
+  
+    .review-privacy-submit {
+      width: 100%; /* take full width */
+      align-items: flex-end; /* keep checkbox + button right-aligned */
     }
-    #btn-back-review, #btn-next-review {
-      flex-basis: 48%;   /* buttons shrink to fit */
+  
+    #btn-back-review {
+      flex-basis: 48%;
+    }
+  
+    #btn-next-review {
+      flex-basis: 48%;
     }
   }
 
@@ -416,19 +422,20 @@
           </div>
         </div>
       </div>
-        <div class="mt-4 d-flex align-items-center justify-content-between review-actions">
-          <button type="button" class="btn btn-secondary flex-shrink-0" id="btn-back-review">Back</button>
-        
-          <div class="form-check d-flex align-items-center ms-auto review-privacy">
+        <div class="mt-4 d-flex flex-wrap align-items-center review-actions">
+        <button type="button" class="btn btn-secondary flex-shrink-0" id="btn-back-review">Back</button>
+      
+        <div class="d-flex flex-column ms-auto align-items-end review-privacy-submit">
+          <div class="form-check mb-2 review-privacy">
             <input type="checkbox" class="form-check-input me-2" id="chk-privacy-agree">
             <label class="form-check-label mb-0" for="chk-privacy-agree">
               I have read and agree to the 
               <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
             </label>
           </div>
-        
           <button type="button" class="btn register-btn flex-shrink-0" id="btn-next-review" disabled>Confirm & Submit</button>
         </div>
+      </div>
     </div>
 
     <!-- Success Content (Hidden by default) -->
