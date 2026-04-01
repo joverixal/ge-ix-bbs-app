@@ -121,57 +121,71 @@ $(document).ready(function () {
     
     const fileInput = $('#inp-payment-file')[0];
     const file = fileInput.files[0];
-    
-      const btnNextReview= $('#btn-next-review');
-      btnNextReview.prop('disabled', true);
-      btnNextReview.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Confirm & Submit');
-      
-        $.ajax({
-            url: API_URL,
-            method: "POST",
-            data: data,
-            success: function (res) {
 
+    const data = {
+          action: "registration",
+          firstName,
+          lastName,
+          gender,
+          birthdate,
+          contactNumber,
+          batchYear,
+          address,
+          package,
+          amount,
+          tshirtSize,
+        };
+    
+    const btnNextReview= $('#btn-next-review');
+    btnNextReview.prop('disabled', true);
+    btnNextReview.html('<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Confirm & Submit');
+    
+      $.ajax({
+          url: API_URL,
+          method: "POST",
+          data: data,
+          success: function (res) {
+
+            btnNextReview.prop('disabled', false);
+            btnNextReview.html('Confirm & Submit'); // restore original text
+            
+            const id = res.id
+            
+            buildSuccessContent(id, firstName, lastName);
+
+            // Hide entire form UI (tabs + steps)
+            $('#frm-registration .tab-pane').hide();
+            $('.step-indicator').hide();
+          
+            // Show success content
+            $('#success-container').fadeIn();
+          
+            // Countdown auto-download
+            let countdown = 3;
+            const originalText = "Download QR Code";
+            $('#btn-download-qr').prop('disabled', true);              
+          
+            const countdownInterval = setInterval(() => {
+                if(countdown <= 0){
+                    clearInterval(countdownInterval);
+                    $('#btn-download-qr')
+                        .prop('disabled', false)
+                        .text(originalText)
+                        .click();
+                } else {
+                    $('#btn-download-qr').text(`${originalText} (${countdown})`);
+                    countdown--;
+                }
+            }, 1000);
+          },
+          error: function (err) {
               btnNextReview.prop('disabled', false);
               btnNextReview.html('Confirm & Submit'); // restore original text
-              
-              const id = res.id
-              
-              buildSuccessContent(id, firstName, lastName);
-
-              // Hide entire form UI (tabs + steps)
-              $('#frm-registration .tab-pane').hide();
-              $('.step-indicator').hide();
             
-              // Show success content
-              $('#success-container').fadeIn();
-            
-              // Countdown auto-download
-              let countdown = 3;
-              const originalText = "Download QR Code";
-              $('#btn-download-qr').prop('disabled', true);              
-            
-              const countdownInterval = setInterval(() => {
-                  if(countdown <= 0){
-                      clearInterval(countdownInterval);
-                      $('#btn-download-qr')
-                          .prop('disabled', false)
-                          .text(originalText)
-                          .click();
-                  } else {
-                      $('#btn-download-qr').text(`${originalText} (${countdown})`);
-                      countdown--;
-                  }
-              }, 1000);
-            },
-            error: function (err) {
-                btnNextReview.prop('disabled', false);
-                btnNextReview.html('Confirm & Submit'); // restore original text
-              
-                console.error(err);
-                alert("Upload failed!");
-            }
-        });
+              console.error(err);
+              alert("Upload failed!");
+          }
+      });
   }
 
   $('input[name="rideCategory"]').on('change', function () {
